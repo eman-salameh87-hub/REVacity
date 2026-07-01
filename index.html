@@ -32,6 +32,12 @@
                 text-align: left !important;
             }
         }
+        @media (pointer: coarse) {
+            html, body {
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-y: none;
+            }
+        }
     </style>
 </head>
 
@@ -2752,6 +2758,8 @@
             const SPEED_MULT = 1.15;
             const STOP_DELTA = 0.4;
 
+            const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window);
+
             let current = window.scrollY;
             let target = window.scrollY;
             let rafId = null;
@@ -2800,11 +2808,15 @@
 
             let touchStartY = 0;
             window.addEventListener('touchstart', (e) => {
+                if (isTouchDevice) return; // let native touch scrolling handle this smoothly
+
                 touchStartY = e.touches[0].clientY;
 
                 if (!rafId) { current = window.scrollY; target = window.scrollY; }
             }, { passive: true });
             window.addEventListener('touchmove', (e) => {
+                if (isTouchDevice) return; // avoid fighting native momentum scrolling with lerped scrollTo calls
+
                 if (document.body.classList.contains('services-dive-active')) return;
                 if (document.body.classList.contains('agent-anim-active')) return;
                 const dy = (touchStartY - e.touches[0].clientY) * 1.8;
