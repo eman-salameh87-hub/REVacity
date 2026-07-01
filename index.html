@@ -1403,6 +1403,7 @@
             { x: 38, y: -6, scaleBoost: 0 },
             { x: -38, y: 6, scaleBoost: 0 }
         ];
+        let orbLabelSettled = [false, false];
         motionParams.visibility = 0;
 
         orbs[0].position.set(38, -6, 0);
@@ -1414,6 +1415,7 @@
 
             if (_orbEntranceTl) { _orbEntranceTl.kill(); _orbEntranceTl = null; }
             _orbEntranceDone = false;
+            orbLabelSettled = [false, false];
 
             orbEntranceOffset[0].x = 38; orbEntranceOffset[0].y = -6;
             orbEntranceOffset[1].x = -38; orbEntranceOffset[1].y = 6;
@@ -2555,6 +2557,14 @@
                 orb.position.x += (tX + orbEntranceOffset[i].x - orb.position.x) * (isDive ? 0.07 : 0.05);
                 orb.position.y += (tY + orbEntranceOffset[i].y - orb.position.y) * (isDive ? 0.07 : 0.05);
 
+                if (!orbLabelSettled[i]) {
+                    const dx = orb.position.x - (tX + orbEntranceOffset[i].x);
+                    const dy = orb.position.y - (tY + orbEntranceOffset[i].y);
+                    if (Math.abs(orbEntranceOffset[i].x) < 0.5 && Math.abs(orbEntranceOffset[i].y) < 0.5 && Math.hypot(dx, dy) < 0.12) {
+                        orbLabelSettled[i] = true;
+                    }
+                }
+
                 const baseScale = orb.userData.baseScale || 1;
                 const diveScale = isDive ? (diveFocused ? 1.85 : 0.48) : 1.0;
                 const targetScale = baseScale * (isHovered ? 1.14 : 1.0) * diveScale;
@@ -2631,8 +2641,10 @@
 
                     label.style.left = `${screenX}px`;
                     label.style.top = `${screenY}px`;
-                    // On mobile, hide labels until orbs have fully arrived so text doesn't trail from top
-                    if (window.innerWidth <= 768 && !_orbEntranceDone) {
+                    // On mobile, hide labels until the orb has actually settled at its resting
+                    // position (not just when the entrance timeline finished) so the text never
+                    // visibly slides/catches up into place — it just appears stuck to the orb.
+                    if (window.innerWidth <= 768 && !orbLabelSettled[i]) {
                         label.style.opacity = 0;
                     } else {
                         label.style.opacity = servicesDiveActive ? 0 : motionParams.visibility;
