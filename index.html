@@ -1475,7 +1475,7 @@
             _orbEntranceTl.call(() => {
                 _orbEntranceDone = true;
                 gsap.set([label0, label1], { clearProps: 'x,scale,filter' });
-                masterTl.invalidate();
+                
             }, [], 1.0);
         }
 
@@ -1661,7 +1661,7 @@
                 end: "+=1096% top",
                 scrub: 1.2,
                 pin: true,
-                invalidateOnRefresh: true,
+                
                 onUpdate: (self) => {
                     const p = self.progress;
 
