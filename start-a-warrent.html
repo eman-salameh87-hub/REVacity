@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REVacity | Start A Warrent</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="media/icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght=0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+/* ── Box sizing reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Single scroll container fix ── */
+html {
+  overflow-x: clip !important;
+  overflow-y: auto !important;  /* html is the ONE vertical scroller */
+  height: 100% !important;
+}
+body {
+  overflow: visible !important; /* body must NOT create a second scroll container */
+  max-width: 100vw !important;
+  min-height: 100% !important;
+}
+/* Clip overflow at section level to prevent horizontal scroll */
+header.main-header,
+.mobile-slide-menu,
+section,
+.creative-footer-reveal-container {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+/* ─────────────────────────────────────────────
+   TABLET (≤ 1024px)
+───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  #hero                { padding: 130px 6vw 60px !important; }
+  .hero-title          { font-size: clamp(2rem, 5vw, 3rem) !important; }
+  #hero blockquote     { max-width: 100% !important; }
+  #how-it-works        { padding: 70px 6vw !important; }
+  .steps-grid          { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+  #who-we-serve        { padding: 70px 6vw !important; }
+  #warrants-vs         { padding: 70px 6vw !important; }
+  .wvc-inner           { grid-template-columns: 1fr !important; gap: 50px !important; }
+  #where-we-operate    { padding: 70px 6vw !important; }
+  .wwo-grid            { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+  #solutions           { padding: 70px 6vw !important; }
+  .solutions-grid      { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+}
+
+/* ─────────────────────────────────────────────
+   MOBILE (≤ 768px)
+───────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* HEADER */
+  .main-header         { padding: 0 5vw !important; height: 64px !important; }
+  .nav-center          { display: none !important; }
+  .header-buttons      { display: none !important; }
+
+  /* HERO */
+  #hero {
+    padding: 100px 5vw 50px !important;
+    min-height: unset !important;
+    display: block !important;
+    width: 100% !important;
+  }
+  .hero-title {
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem) !important;
+    line-height: 1.2 !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+  }
+  .hero-subtitle {
+    font-size: 0.93rem !important;
+    line-height: 1.7 !important;
+    max-width: 100% !important;
+  }
+  #hero blockquote {
+    padding: 1rem 1.2rem !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* HOW IT WORKS */
+  #how-it-works        { padding: 60px 5vw !important; }
+  .steps-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+  .step-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    padding: 16px 18px !important;
+    width: 100% !important;
+    min-width: 0 !important;        /* ← prevents flex children from overflowing */
+  }
+  .step-num {
+    flex: 0 0 auto !important;      /* ← never shrink or grow */
+    font-size: 1.3rem !important;
+  }
+  .step-text {
+    flex: 1 1 0 !important;         /* ← takes remaining space */
+    min-width: 0 !important;        /* ← critical: allows text to wrap */
+  }
+  .step-label, .step-desc {
+    min-width: 0 !important;        /* ← allows text to wrap inside flex */
+    word-break: break-word !important;
+  }
+
+  /* WHO WE SERVE */
+  #who-we-serve        { padding: 60px 5vw !important; }
+  .wws-inner           { width: 100% !important; }
+  .wws-row {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 16px 0 !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+  .wws-label           { min-width: unset !important; }
+  .wws-value           { width: 100% !important; min-width: 0 !important; }
+  .tiers-row           { flex-wrap: wrap !important; gap: 8px !important; }
+  .tier-badge          { flex: 1 1 calc(50% - 8px) !important; min-width: 120px !important; text-align: center !important; }
+
+  /* WARRANTS VS CONTRACTS */
+  #warrants-vs         { padding: 60px 5vw !important; }
+  .wvc-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 40px !important;
+    width: 100% !important;
+  }
+  .wvc-title           { font-size: clamp(1.3rem, 5.5vw, 1.9rem) !important; }
+  /* The scroll wrapper keeps overflow contained */
+  .wvc-table-scroll-wrap {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 8px !important;
+  }
+  .wvc-table {
+    width: 100% !important;
+    min-width: 460px !important;    /* ← allows horizontal scroll, not clipping */
+    font-size: 0.83rem !important;
+    white-space: normal !important;
+  }
+  .wvc-table th        { padding: 10px 16px !important; font-size: 0.75rem !important; }
+  .wvc-table td        { padding: 10px 16px !important; }
+  .wvc-gate-panel      { width: 100% !important; padding: 0 !important; }
+  .qgate-title         { font-size: clamp(1.2rem, 5vw, 1.7rem) !important; line-height: 1.3 !important; }
+  .qgate-subtitle      { font-size: 0.9rem !important; }
+
+  /* WHERE WE OPERATE */
+  #where-we-operate    { padding: 60px 5vw !important; }
+  .wwo-inner           { padding: 0 !important; width: 100% !important; }
+  .wwo-header          { text-align: left !important; margin-bottom: 30px !important; padding: 0 !important; }
+  .wwo-title           { font-size: clamp(1.1rem, 5vw, 1.6rem) !important; line-height: 1.25 !important; }
+  .wwo-desc            { font-size: 0.9rem !important; max-width: 100% !important; }
+  .wwo-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+  .wwo-card            { width: 100% !important; padding: 20px 18px !important; }
+  .wwo-card-title      { font-size: 1rem !important; }
+  .wwo-item-text       { font-size: 0.85rem !important; }
+
+  /* SOLUTIONS */
+  #solutions           { padding: 60px 5vw !important; }
+  .solutions-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+  .solution-card       { width: 100% !important; padding: 20px 18px !important; }
+  .solution-title      { font-size: 1rem !important; }
+  .solution-desc       { font-size: 0.87rem !important; }
+
+  /* FOOTER */
+  .creative-footer-reveal-container { width: 100% !important; }
+  footer.creative-tech-footer       { padding: 50px 5vw 30px !important; }
+  .footer-grid-inner   { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .footer-links-grid   { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
+  .footer-bottom-bar   { flex-direction: column !important; gap: 12px !important; text-align: center !important; }
+  .footer-legal-links  { flex-wrap: wrap !important; justify-content: center !important; gap: 8px !important; }
+  .footer-subscribe-wrapper { width: 100% !important; }
+}
+
+/* ─────────────────────────────────────────────
+   SMALL MOBILE (≤ 480px)
+───────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .hero-title          { font-size: clamp(1.4rem, 7.5vw, 1.9rem) !important; }
+  .section-title       { font-size: clamp(1.2rem, 6vw, 1.7rem) !important; }
+  .tiers-row           { flex-direction: column !important; }
+  .tier-badge          { width: 100% !important; flex: unset !important; }
+  .footer-links-grid   { grid-template-columns: 1fr !important; }
+  .wvc-table           { font-size: 0.78rem !important; min-width: 380px !important; }
+}
+</style>
+</head>
+<body class="page-warrant">
+
+ <header class="main-header">
+    <div class="logo"><a href="index.html"><img src="media/logo-new.png" alt="Revacity" fetchpriority="high" /></a></div>
+
+    <nav class="nav-center">
+        <a href="index.html" data-text="The Collapse">The Collapse</a>
+        <a href="about.html" data-text="About Us">About Us</a>
+        <a href="before-judging-us.html" data-text="Before Judging">Before Judging</a>
+        <a href="compare.html" data-text="Compare">Compare</a>
+        <a href="blog.html" data-text="Blog">Blog</a>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 20px;">
+
+        <div class="header-buttons">
+            <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant">
+                <span>Start a Warrant</span>
+            </a>
+            <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward">
+                <span>$100k Reward</span>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
+<div class="mobile-slide-menu" id="mobile-menu">
+    <div class="close-menu" id="close-menu">
+        <span></span>
+        <span></span>
+    </div>
+
+    <a href="index.html" class="menu-item" style="--i: 1;">The Collapse</a>
+    <a href="about.html" class="menu-item" style="--i: 2;">About Us</a>
+    <a href="before-judging-us.html" class="menu-item" style="--i: 3;">Before Judging</a>
+    <a href="compare.html" class="menu-item" style="--i: 4;">Compare</a>
+    <a href="blog.html" class="menu-item" style="--i: 5;">Blog</a>
+
+    <div class="mobile-menu-cta" style="--i: 6;">
+        <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant"><span>Start a Warrant</span></a>
+        <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward"><span>$100k Reward</span></a>
+    </div>
+</div>
+
+<section id="hero">
+  <h1 class="hero-title">We don't sign contracts.<br><span>We sign warrants.</span></h1>
+  <p class="hero-subtitle">A Revenue Warrant is not a contract. It is a signed commitment to a specific revenue outcome — with a specific number, a specific timeline, and a specific consequence if we don't deliver. If the revenue doesn't materialize, we don't get paid. No escape clauses. No scope-change fees. No "market conditions" excuses.</p>
+  <blockquote style="margin-top: 2rem; border-left: 3px solid var(--gold); padding: 1.2rem 1.6rem; background: rgba(255,255,255,0.04); border-radius: 0 6px 6px 0; max-width: 680px;">
+    <p style="font-size: clamp(0.95rem, 1.4vw, 1.1rem); font-weight: 600; line-height: 1.6; color: rgba(255,255,255,0.92);">If the revenue doesn't materialize, we don't get paid. No escape clauses. No scope-change fees. No "market conditions" excuses.</p>
+  </blockquote>
+  <p class="hero-subtitle" style="margin-top: 1.8rem;">This isn't a gimmick. This is the only model that makes sense when you're engineering reality, not shipping deliverables. We're so careful about who we take on because our money is on the line too.</p>
+</section>
+
+<section id="how-it-works">
+  <p class="section-eyebrow">Engagement Economics</p>
+  <h2 class="section-title">How the <span>Warrant Works.</span></h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-text"><div class="step-label">Request</div><p class="step-desc">You tell us what's wrong — or what you suspect.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-text"><div class="step-label">Access</div><p class="step-desc">We get read-only access to the relevant systems.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-text"><div class="step-label">Analysis</div><p class="step-desc">72 hours of deep forensic analysis.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-text"><div class="step-label">Delivery</div><p class="step-desc">A clear map of what's broken, what it costs, and what to do.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="who-we-serve">
+  <p class="section-eyebrow">Audience &amp; Scope</p>
+  <h2 class="section-title">Who We Serve</h2>
+  <div class="wws-inner">
+    <div class="wws-row">
+      <div class="wws-label"><span>Verticals</span></div>
+      <div class="wws-value">
+        <p>Retail and E-commerce only.<em>We do not serve mass; we cannot.</em></p>
+      </div>
+    </div>
+    <div class="wws-row">
+      <div class="wws-label"><span>Markets</span></div>
+      <div class="wws-value">
+        <p>Arizona, California, Dubai, UAE<em>Riyadh next.</em></p>
+      </div>
+    </div>
+    <div class="wws-row">
+      <div class="wws-label"><span>Buyer</span></div>
+      <div class="wws-value">
+        <p>CMO, Founder, Marketing Manager<em>People who hold both budget and signal authority.</em></p>
+      </div>
+    </div>
+    <div class="wws-row">
+      <div class="wws-label"><span>Engagement Tiers</span></div>
+      <div class="wws-value">
+        <div class="tiers-row">
+          <div class="tier-badge tier-a"><span class="tier-name">Tier A</span><span class="tier-amount">$150K+</span></div>
+          <div class="tier-badge tier-b"><span class="tier-name">Tier B</span><span class="tier-amount">$100–149K</span></div>
+          <div class="tier-badge tier-c"><span class="tier-name">Tier C</span><span class="tier-amount">$50–99K</span></div>
+          <div class="tier-badge tier-d"><span class="tier-name">Tier D</span><span class="tier-amount">&lt;$49K</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="warrants-vs">
+  <div class="wvc-inner">
+
+    <div>
+      <h2 class="wvc-title">Warrants vs. Contracts.</h2>
+      <div class="wvc-table-scroll-wrap">
+      <table class="wvc-table">
+        <thead>
+          <tr>
+            <th class="col-warrant">Revenue Warrant</th>
+            <th class="col-contract">Traditional Contract</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-warrant">Defines a revenue outcome</td>
+            <td class="col-contract">Defines a scope of work</td>
+          </tr>
+          <tr>
+            <td class="col-warrant">Payment tied to results</td>
+            <td class="col-contract">Payment tied to time/deliverables</td>
+          </tr>
+          <tr>
+            <td class="col-warrant">We eat the cost if we fail</td>
+            <td class="col-contract">You eat the cost if they fail</td>
+          </tr>
+          <tr>
+            <td class="col-warrant">Aligned incentives</td>
+            <td class="col-contract">Misaligned incentives</td>
+          </tr>
+          <tr>
+            <td class="col-warrant">We choose our clients carefully</td>
+            <td class="col-contract">They take anyone who pays</td>
+          </tr>
+          <tr>
+            <td class="col-warrant">Accountability is structural</td>
+            <td class="col-contract">Accountability is theoretical</td>
+          </tr>
+          <tr>
+            <td class="col-warrant">Outcome is the contract</td>
+            <td class="col-contract">The contract is just paper</td>
+          </tr>
+          <tr>
+            <td class="col-warrant">Revenue or nothing</td>
+            <td class="col-contract">Invoice regardless</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="wvc-gate-panel">
+
+<div id="qualification-gate">
+  <h2 class="qgate-title">
+    <span class="line-white">This is not a contact form.</span>
+    <span class="line-purple">It's a qualification gate.</span>
+  </h2>
+  <p class="qgate-subtitle">We don't work with everyone. Not because we're elitist — because we sign Revenue Warrants. If we can't guarantee the outcome, we don't take the engagement. Start by telling us your posture.</p>
+</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="where-we-operate">
+  <div class="wwo-inner">
+    <div class="wwo-header">
+      <p class="wwo-eyebrow">Where We Operate</p>
+      <h2 class="wwo-title">RETAIL. ECOMMERCE. NOTHING ELSE.</h2>
+      <p class="wwo-desc">We only work with retail and ecommerce. We don't do B2B SaaS. We don't do fintech. We know our lane and we own it.</p>
+    </div>
+    <div class="wwo-grid">
+
+      <div class="wwo-card">
+        <h3 class="wwo-card-title">Fashion &amp; Apparel</h3>
+        <div class="wwo-item">
+          <div class="wwo-item-bar"></div>
+          <div class="wwo-item-content">
+            <div class="wwo-item-label">REAaS</div>
+            <p class="wwo-item-text">Revenue velocity through signal-driven personalization</p>
+          </div>
+        </div>
+        <div class="wwo-item wwo-item2">
+          <div class="wwo-item-bar"></div>
+          <div class="wwo-item-content">
+            <div class="wwo-item-label">GEAaS</div>
+            <p class="wwo-item-text">VTON, 3D commerce, sensory digital experiences</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wwo-card">
+        <h3 class="wwo-card-title">Furniture &amp; Home</h3>
+        <div class="wwo-item">
+          <div class="wwo-item-bar"></div>
+          <div class="wwo-item-content">
+            <div class="wwo-item-label">REAaS</div>
+            <p class="wwo-item-text">Optimized acquisition funnels, reduced fiction-to-fact ratio</p>
+          </div>
+        </div>
+        <div class="wwo-item wwo-item2">
+          <div class="wwo-item-bar"></div>
+          <div class="wwo-item-content">
+            <div class="wwo-item-label">GEAaS</div>
+            <p class="wwo-item-text">AR placement, digital twin showrooms, hyper-personalization</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wwo-card">
+        <h3 class="wwo-card-title">FMCG &amp; Grocery</h3>
+        <div class="wwo-item">
+          <div class="wwo-item-bar"></div>
+          <div class="wwo-item-content">
+            <div class="wwo-item-label">REAaS</div>
+            <p class="wwo-item-text">Velocity engines for repeat purchase and basket optimization</p>
+          </div>
+        </div>
+        <div class="wwo-item wwo-item2">
+          <div class="wwo-item-bar"></div>
+          <div class="wwo-item-content">
+            <div class="wwo-item-label">GEAaS</div>
+            <p class="wwo-item-text">Novel engagement layers, sensory retail systems</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wwo-card">
+        <h3 class="wwo-card-title">Electronics &amp; Tech</h3>
+        <div class="wwo-item">
+          <div class="wwo-item-bar"></div>
+          <div class="wwo-item-content">
+            <div class="wwo-item-label">REAaS</div>
+            <p class="wwo-item-text">Signal intelligence for high-consideration purchases</p>
+          </div>
+        </div>
+        <div class="wwo-item wwo-item2">
+          <div class="wwo-item-bar"></div>
+          <div class="wwo-item-content">
+            <div class="wwo-item-label">GEAaS</div>
+            <p class="wwo-item-text">3D product interaction, digital twin support ecosystems</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="solutions">
+  <p class="solutions-eyebrow">Solutions We've Built</p>
+  <div class="solutions-grid">
+
+    <div class="solution-card">
+      <div class="solution-num">01</div>
+      <h3 class="solution-title">3D Commerce Engine</h3>
+      <p class="solution-desc">Built from scratch for a retail client. Zero legacy. Full 3D product interaction.</p>
+    </div>
+
+    <div class="solution-card">
+      <div class="solution-num">02</div>
+      <h3 class="solution-title">VTON Platform</h3>
+      <p class="solution-desc">Virtual try-on for fashion and furniture. Custom computer vision pipeline.</p>
+    </div>
+
+    <div class="solution-card">
+      <div class="solution-num">03</div>
+      <h3 class="solution-title">Sensory Retail</h3>
+      <p class="solution-desc">Multi-sensory digital experiences for in-store engagement.</p>
+    </div>
+
+    <div class="solution-card">
+      <div class="solution-num">04</div>
+      <h3 class="solution-title">Hyper-Personalized E-commerce</h3>
+      <p class="solution-desc">Individual storefronts per visitor, engineered in real-time.</p>
+    </div>
+
+    <div class="solution-card">
+      <div class="solution-num">05</div>
+      <h3 class="solution-title">Digital Twin Ecosystem</h3>
+      <p class="solution-desc">Full digital replica of retail operations for simulation and optimization.</p>
+    </div>
+
+    <div class="solution-card">
+      <div class="solution-num">06</div>
+      <h3 class="solution-title">Growth Intelligence Layer</h3>
+      <p class="solution-desc">Predictive growth modeling with 90%+ accuracy at scale.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="creative-footer-reveal-container" id="site-footer">
+  <footer class="creative-tech-footer">
+    <div class="footer-top-glow-line"></div>
+
+    <div class="footer-grid-inner">
+      <div class="footer-brand-column">
+        <img src="media/REVacity.png" alt="REVacity" style="width:180px; height:auto;" />
+        <p class="footer-brand-tagline">
+          Observability platforms and autonomous orchestration frameworks for high-fidelity agentic systems.
+        </p>
+      </div>
+
+      <div class="footer-links-grid">
+        <div class="footer-link-group">
+            <h4 class="group-title">STRUCTURE</h4>
+            <a href="index.html" class="footer-link-item"><span class="link-num">01 //</span> The Collapse</a>
+            <a href="about.html" class="footer-link-item"><span class="link-num">02 //</span> About Us</a>
+            <a href="our-architecture.html" class="footer-link-item"><span class="link-num">03 //</span> Our Architecture</a>
+        </div>
+
+        <div class="footer-link-group">
+            <h4 class="group-title">STRUCTURE</h4>
+            <a href="before-judging-us.html" class="footer-link-item"><span class="link-num">04 //</span> Before Judging</a>
+            <a href="compare.html" class="footer-link-item"><span class="link-num">05 //</span> Compare</a>
+            <a href="blog.html" class="footer-link-item"><span class="link-num">06 //</span>Blog</a>
+        </div>
+      </div>
+
+      <div class="footer-actions-column">
+        <h4 class="group-title">SYSTEM INTERACTION</h4>
+        <div class="footer-subscribe-wrapper">
+          <input type="email" placeholder="Enter operator email..." class="footer-input-field" />
+          <button type="button" class="footer-submit-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+          <div class="footer-meta-stamps">
+                     <div class="footer-socials-row">
+                    <a href="#" class="social-icon-btn" aria-label="LinkedIn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="X (Twitter)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Facebook">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Instagram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+                </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+        <p class="copyright-text">&copy; 2026 REVACITY . ALL PROTOCOLS RESERVED.</p>
+        <div class="footer-legal-links">
+            <a href="privacy.html">PRIVACY DECREE</a>
+            <span class="divider">/</span>
+            <a href="terms.html">TERMINAL TERMS</a>
+            <span class="divider">/</span>
+            <a href="security-clearance.html">SECURITY CLEARANCE</a>
+        </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+
+(function() {
+  const hamburger    = document.getElementById('hamburger');
+  const mobileMenu   = document.getElementById('mobile-menu');
+  const closeMenuBtn = document.getElementById('close-menu');
+  if (!hamburger || !mobileMenu || !closeMenuBtn) return;
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.add('active');
+    mobileMenu.classList.add('active');
+  });
+  const closeMenu = () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+  };
+  closeMenuBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+<script>
+
+(function () {
+  const canvases = document.querySelectorAll('.bolt-canvas');
+  if (!canvases.length) return;
+
+  const states = Array.from(canvases).map((canvas, i) => ({
+    canvas,
+    ctx: canvas.getContext('2d'),
+    segs:  [],
+    alpha: 0,
+    timer: 8 + i * 7
+  }));
+
+  function makeBolt(x1, y1, x2, y2, rough, depth) {
+    const segs = [];
+    function split(ax, ay, bx, by, d) {
+      if (d === 0) { segs.push([ax, ay, bx, by]); return; }
+      const mx = (ax + bx) / 2 + (Math.random() - 0.5) * rough * (d / depth) * 1.2;
+      const my = (ay + by) / 2 + (Math.random() - 0.5) * rough * 0.6;
+      split(ax, ay, mx, my, d - 1);
+      split(mx, my, bx, by, d - 1);
+
+      if (d === 2 && Math.random() < 0.45) {
+        const fLen = rough * (0.3 + Math.random() * 0.5);
+        const angle = Math.atan2(by - ay, bx - ax) + (Math.random() - 0.5) * 1.2;
+        segs.push([mx, my,
+          mx + Math.cos(angle) * fLen,
+          my + Math.sin(angle) * fLen]);
+      }
+    }
+    split(x1, y1, x2, y2, depth);
+    return segs;
+  }
+
+  function resizeAll() {
+    states.forEach(({ canvas }) => {
+
+      const rect = canvas.getBoundingClientRect();
+      canvas.width  = rect.width  || 80;
+      canvas.height = rect.height || 40;
+    });
+  }
+
+  function drawBolt(ctx, segs, alpha, W, H) {
+    if (!segs.length || alpha <= 0) return;
+
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.18;
+    ctx.strokeStyle = 'rgba(180, 90, 255, 1)';
+    ctx.lineWidth   = 5;
+    ctx.shadowColor = 'rgba(168, 85, 247, 1)';
+    ctx.shadowBlur  = 12;
+    ctx.lineCap     = 'round';
+    segs.forEach(([ax, ay, bx, by]) => {
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+    });
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.42;
+    ctx.strokeStyle = 'rgba(200, 120, 255, 1)';
+    ctx.lineWidth   = 1.8;
+    ctx.shadowColor = 'rgba(180, 90, 255, 0.9)';
+    ctx.shadowBlur  = 6;
+    ctx.lineCap     = 'round';
+    segs.forEach(([ax, ay, bx, by]) => {
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+    });
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.80;
+    ctx.strokeStyle = 'rgba(220, 170, 255, 1)';
+    ctx.lineWidth   = 0.8;
+    ctx.shadowBlur  = 3;
+    ctx.lineCap     = 'round';
+    segs.forEach(([ax, ay, bx, by]) => {
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+    });
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.55;
+    ctx.strokeStyle = 'rgba(255, 248, 255, 1)';
+    ctx.lineWidth   = 0.35;
+    ctx.lineCap     = 'round';
+    segs.forEach(([ax, ay, bx, by]) => {
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+    });
+    ctx.restore();
+
+    const tip  = W;
+    const midY = H / 2;
+    const aSize = 7;
+
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.55;
+    ctx.fillStyle   = '#c084fc';
+    ctx.shadowColor = 'rgba(192, 132, 252, 1)';
+    ctx.shadowBlur  = 14;
+    ctx.beginPath();
+    ctx.moveTo(tip,              midY);
+    ctx.lineTo(tip - aSize * 1.8, midY - aSize);
+    ctx.lineTo(tip - aSize * 1.8, midY + aSize);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.90;
+    ctx.fillStyle   = '#e0aaff';
+    ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+    ctx.shadowBlur  = 6;
+    ctx.beginPath();
+    ctx.moveTo(tip,              midY);
+    ctx.lineTo(tip - aSize * 1.8, midY - aSize);
+    ctx.lineTo(tip - aSize * 1.8, midY + aSize);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function loop() {
+    states.forEach(state => {
+      const { canvas, ctx } = state;
+      const W = canvas.width;
+      const H = canvas.height;
+      ctx.clearRect(0, 0, W, H);
+
+      state.timer--;
+      if (state.timer <= 0) {
+
+        const rough = Math.min(H * 0.35, 18);
+        state.segs  = makeBolt(0, H / 2, W, H / 2, rough, 4);
+        state.alpha = 1.0;
+
+        state.timer = 10 + Math.floor(Math.random() * 18);
+      }
+
+      state.alpha = Math.max(0, state.alpha - 0.05);
+      drawBolt(ctx, state.segs, state.alpha, W, H);
+    });
+
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', () => {
+    resizeAll();
+    states.forEach(s => { s.segs = []; s.alpha = 0; });
+  });
+
+  setTimeout(() => { resizeAll(); loop(); }, 120);
+})();
+</script>
+
+<script>
+
+(function () {
+  const canvas = document.getElementById('feedback-loop-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function getCard1() { return document.querySelector('.agent-card--red'); }
+  function getCard4() { return document.querySelector('.agent-card--green'); }
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+
+  let dashOffset = 0;
+
+  function draw() {
+    const W = canvas.width;
+    const H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    const wrap = canvas.parentElement;
+    const wrapRect = wrap.getBoundingClientRect();
+
+    const c1 = getCard1();
+    const c4 = getCard4();
+    if (!c1 || !c4) { requestAnimationFrame(draw); return; }
+
+    const c1Rect = c1.getBoundingClientRect();
+    const c4Rect = c4.getBoundingClientRect();
+
+    const canvasRect = canvas.getBoundingClientRect();
+    const x4 = c4Rect.right  - canvasRect.left - (c4Rect.width * 0.15);
+    const x1 = c1Rect.left   - canvasRect.left + (c1Rect.width * 0.15);
+    const yTop = 4;
+    const yBot = H - 10;
+
+    const path = [
+      { x: x4, y: yTop  },
+      { x: x4, y: yBot  },
+      { x: x1, y: yBot  },
+      { x: x1, y: yTop  },
+    ];
+
+    dashOffset -= 0.4;
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(168, 85, 247, 0.35)';
+    ctx.lineWidth   = 4;
+    ctx.lineCap     = 'round';
+    ctx.lineJoin    = 'round';
+    ctx.shadowColor = 'rgba(168, 85, 247, 0.6)';
+    ctx.shadowBlur  = 10;
+    ctx.setLineDash([6, 6]);
+    ctx.lineDashOffset = dashOffset;
+    ctx.beginPath();
+    ctx.moveTo(path[0].x, path[0].y);
+    path.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(192, 132, 252, 0.75)';
+    ctx.lineWidth   = 1.5;
+    ctx.lineCap     = 'round';
+    ctx.lineJoin    = 'round';
+    ctx.shadowColor = 'rgba(168, 85, 247, 0.9)';
+    ctx.shadowBlur  = 5;
+    ctx.setLineDash([6, 6]);
+    ctx.lineDashOffset = dashOffset;
+    ctx.beginPath();
+    ctx.moveTo(path[0].x, path[0].y);
+    path.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
+    ctx.stroke();
+    ctx.restore();
+
+    const ax = x1;
+    const ay = yTop;
+    const arrowSize = 7;
+
+    ctx.save();
+    ctx.fillStyle   = '#c084fc';
+    ctx.shadowColor = 'rgba(192, 132, 252, 0.9)';
+    ctx.shadowBlur  = 10;
+    ctx.beginPath();
+    ctx.moveTo(ax,              ay);
+    ctx.lineTo(ax - arrowSize,  ay + arrowSize * 1.6);
+    ctx.lineTo(ax + arrowSize,  ay + arrowSize * 1.6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+  });
+
+  setTimeout(() => { resize(); draw(); }, 150);
+})();
+</script>
+
+<!-- GSAP + ScrollTrigger CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.ticker.lagSmoothing(1000, 16);
+
+  /* ── Header entrance ── */
+  gsap.set('.main-header', { y: -80, autoAlpha: 0 });
+  gsap.to('.main-header', { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', delay: 0.1 });
+
+  /* ── Hero entrance — set initial states via GSAP, not CSS ── */
+  gsap.set('.hero-title', { y: 50, autoAlpha: 0 });
+  gsap.set('#hero .hero-subtitle', { y: 30, autoAlpha: 0 });
+  gsap.set('#hero blockquote', { x: -40, autoAlpha: 0 });
+
+  const heroTL = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.2 });
+  heroTL
+    .to('.hero-title',                    { y: 0, autoAlpha: 1, duration: 0.9 })
+    .to('#hero .hero-subtitle',           { y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.15 }, '-=0.5')
+    .to('#hero blockquote',               { x: 0, autoAlpha: 1, duration: 0.7 }, '-=0.4');
+
+  /* ── Helper: fire immediately if already in view, else on scroll ── */
+  function scrollReveal(trigger, startPos, callback) {
+    const el = typeof trigger === 'string' ? document.querySelector(trigger) : trigger;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      callback(); // already visible — run now
+    } else {
+      ScrollTrigger.create({
+        trigger: el,
+        start: startPos || 'top 90%',
+        once: true,
+        onEnter: callback
+      });
+    }
+  }
+
+  /* ── Section eyebrow + title ── */
+  gsap.utils.toArray('.section-eyebrow').forEach(el => {
+    gsap.set(el, { x: -30, autoAlpha: 0 });
+    scrollReveal(el, 'top 95%', () =>
+      gsap.to(el, { x: 0, autoAlpha: 1, letterSpacing: '0.08em', duration: 0.8, ease: 'power3.out' })
+    );
+  });
+  gsap.utils.toArray('.section-title').forEach(el => {
+    gsap.set(el, { y: 40, autoAlpha: 0, scale: 0.96 });
+    scrollReveal(el, 'top 95%', () =>
+      gsap.to(el, { y: 0, autoAlpha: 1, scale: 1, duration: 0.9, ease: 'power3.out' })
+    );
+  });
+
+  /* ── How It Works — step cards ── */
+  gsap.set('.step-card', { y: 60, autoAlpha: 0 });
+  gsap.set('.step-num',  { scale: 0, rotation: -90, autoAlpha: 0 });
+  scrollReveal('.steps-grid', 'top 100%', () => {
+    gsap.to('.step-card', { y: 0, autoAlpha: 1, stagger: 0.12, duration: 0.7, ease: 'back.out(1.3)' });
+    gsap.to('.step-num',  { scale: 1, rotation: 0, autoAlpha: 1, stagger: 0.12, duration: 0.6, ease: 'elastic.out(1, 0.5)', delay: 0.1 });
+  });
+  document.querySelectorAll('.step-card').forEach(card => {
+    card.addEventListener('mouseenter', () => gsap.to(card, { y: -6, scale: 1.02, duration: 0.3, ease: 'power2.out' }));
+    card.addEventListener('mouseleave', () => gsap.to(card, { y: 0, scale: 1, duration: 0.4, ease: 'power2.out' }));
+  });
+
+  /* ── Who We Serve ── */
+  gsap.utils.toArray('.wws-row').forEach(row => {
+    const label = row.querySelector('.wws-label');
+    const value = row.querySelector('.wws-value');
+    if (label) gsap.set(label, { x: -30, autoAlpha: 0 });
+    if (value) gsap.set(value, { x: 30, autoAlpha: 0 });
+    scrollReveal(row, 'top 100%', () => {
+      if (label) gsap.to(label, { x: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' });
+      if (value) gsap.to(value, { x: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out', delay: 0.1 });
+    });
+  });
+  gsap.set('.tier-badge', { scale: 0.6, autoAlpha: 0 });
+  scrollReveal('.tiers-row', 'top 100%', () =>
+    gsap.to('.tier-badge', { scale: 1, autoAlpha: 1, stagger: 0.08, duration: 0.5, ease: 'back.out(2)' })
+  );
+
+  /* ── Warrants vs Contracts ── */
+  gsap.set('.wvc-title', { x: -30, autoAlpha: 0 });
+  gsap.set('.wvc-table tr', { x: -20, autoAlpha: 0 });
+  scrollReveal('.wvc-table', 'top 100%', () => {
+    gsap.to('.wvc-title',    { x: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' });
+    gsap.to('.wvc-table tr', { x: 0, autoAlpha: 1, stagger: 0.07, duration: 0.5, ease: 'power2.out', delay: 0.15 });
+  });
+  gsap.set('.qgate-title .line-white', { y: 20, autoAlpha: 0 });
+  gsap.set('.qgate-title .line-purple', { y: 20, autoAlpha: 0 });
+  gsap.set('.qgate-subtitle', { y: 20, autoAlpha: 0 });
+  scrollReveal('#qualification-gate', 'top 100%', () => {
+    gsap.to('.qgate-title .line-white',  { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' });
+    gsap.to('.qgate-title .line-purple', { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out', delay: 0.12 });
+    gsap.to('.qgate-subtitle',           { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out', delay: 0.25 });
+  });
+
+  /* ── Where We Operate ── */
+  gsap.set('.wwo-card', { y: 50, autoAlpha: 0, scale: 0.94 });
+  scrollReveal('.wwo-grid', 'top 100%', () =>
+    gsap.to('.wwo-card', { y: 0, autoAlpha: 1, scale: 1, stagger: 0.12, duration: 0.7, ease: 'power3.out' })
+  );
+  document.querySelectorAll('.wwo-card').forEach(card => {
+    const bars = card.querySelectorAll('.wwo-item-bar');
+    gsap.set(bars, { scaleY: 0, transformOrigin: 'top' });
+    scrollReveal(card, 'top 100%', () =>
+      gsap.to(bars, { scaleY: 1, stagger: 0.1, duration: 0.5, ease: 'power2.out', delay: 0.3 })
+    );
+    card.addEventListener('mouseenter', () => gsap.to(card, { y: -5, duration: 0.3, ease: 'power2.out' }));
+    card.addEventListener('mouseleave', () => gsap.to(card, { y: 0, duration: 0.3, ease: 'power2.out' }));
+  });
+
+  /* ── Solutions ── */
+  gsap.set('.solution-card', { y: 40, autoAlpha: 0 });
+  gsap.set('.solution-num',  { x: -15, autoAlpha: 0 });
+  scrollReveal('.solutions-grid', 'top 100%', () => {
+    gsap.to('.solution-card', { y: 0, autoAlpha: 1, stagger: 0.1, duration: 0.65, ease: 'back.out(1.3)' });
+    gsap.to('.solution-num',  { x: 0, autoAlpha: 1, stagger: 0.1, duration: 0.5, ease: 'power2.out', delay: 0.1 });
+  });
+  document.querySelectorAll('.solution-card').forEach(card => {
+    card.addEventListener('mouseenter', () => gsap.to(card, { y: -6, scale: 1.02, duration: 0.3, ease: 'power2.out' }));
+    card.addEventListener('mouseleave', () => gsap.to(card, { y: 0, scale: 1, duration: 0.3, ease: 'power2.out' }));
+  });
+
+  /* ── Ambient parallax on hero ── */
+  gsap.to('#hero', {
+    backgroundPositionY: '30%',
+    ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  /* ── Footer reveal ── */
+  gsap.set('#site-footer', { y: 60, autoAlpha: 0 });
+  gsap.set('.footer-brand-column', { x: -30, autoAlpha: 0 });
+  gsap.set('.footer-link-group', { y: 20, autoAlpha: 0 });
+  gsap.set('.footer-actions-column', { x: 30, autoAlpha: 0 });
+  gsap.set('.footer-bottom-bar', { y: 15, autoAlpha: 0 });
+  scrollReveal('#site-footer', 'top 100%', () => {
+    gsap.to('#site-footer',          { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out' });
+    gsap.to('.footer-brand-column',  { x: 0, autoAlpha: 1, duration: 0.7, ease: 'power2.out', delay: 0.15 });
+    gsap.to('.footer-link-group',    { y: 0, autoAlpha: 1, stagger: 0.1, duration: 0.6, ease: 'power2.out', delay: 0.25 });
+    gsap.to('.footer-actions-column',{ x: 0, autoAlpha: 1, duration: 0.7, ease: 'power2.out', delay: 0.25 });
+    gsap.to('.footer-bottom-bar',    { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out', delay: 0.4 });
+  });
+
+  /* ── Nav link hover ── */
+  document.querySelectorAll('.nav-center a').forEach(link => {
+    link.addEventListener('mouseenter', () => gsap.to(link, { letterSpacing: '0.03em', duration: 0.2, ease: 'power1.out' }));
+    link.addEventListener('mouseleave', () => gsap.to(link, { letterSpacing: 'normal', duration: 0.3, ease: 'power1.out' }));
+  });
+
+  /* ── Social icons bounce ── */
+  document.querySelectorAll('.social-icon-btn').forEach(icon => {
+    icon.addEventListener('mouseenter', () => gsap.to(icon, { scale: 1.3, rotation: 10, duration: 0.3, ease: 'back.out(2)' }));
+    icon.addEventListener('mouseleave', () => gsap.to(icon, { scale: 1, rotation: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' }));
+  });
+
+  /* ── Button magnetic hover ── */
+  document.querySelectorAll('.btn-reward, .btn-warrant').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const dx = (e.clientX - rect.left - rect.width / 2) * 0.25;
+      const dy = (e.clientY - rect.top - rect.height / 2) * 0.25;
+      gsap.to(btn, { x: dx, y: dy, duration: 0.3, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' }));
+  });
+
+  ScrollTrigger.refresh();
+})();
+</script>
+
+</body>
+</html>

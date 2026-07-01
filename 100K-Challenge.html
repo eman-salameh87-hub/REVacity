@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REVacity | The $100K Challenge</title>
+<script>if (history.scrollRestoration) history.scrollRestoration = 'manual'; window.scrollTo(0,0);</script>
+<link rel="icon" type="image/png" href="media/icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght=0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── 100K Challenge — page-specific overrides ── */
+:root{--pink:#e63888;--purple:#9b5de5;--gold:#f4a135;--white:#ffffff;--bg:#0e0819}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+/* #hero conflicts with style.css about-page hero — scoped */
+body.page-100k #hero{width:100%;min-height:100vh;display:grid;grid-template-columns:1.1fr 1.1fr;gap:5vw;padding:140px 6vw 60px;position:relative;z-index:1}
+
+/* .card-title conflicts (different size/color) — scoped */
+body.page-100k .card-title{font-size:1.15rem;font-weight:700;color:#ffffff;margin-bottom:12px}
+
+/* .compare-action-row conflicts (different display/gap) — scoped */
+body.page-100k .compare-action-row{display:flex;align-items:center;gap:25px}
+
+/* .skeptical-container conflicts (different layout/padding) — scoped */
+body.page-100k .skeptical-container{margin-top:15px;padding-left:10px;display:block;text-align:left;align-items:unset}
+
+/* .skeptical-title conflicts (different gradient) — scoped */
+body.page-100k .skeptical-title{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,2.5vw,1.5rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:6px;background:linear-gradient(90deg,#fd302d 0%,#ff8702 30%,#fd3629 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block}
+
+@media(max-width:968px){
+  body.page-100k #hero{grid-template-columns:1fr;padding-top:110px;gap:60px}
+}
+
+@media(max-width:768px){
+  body.page-100k #hero{padding:100px 5vw 50px}
+  .tab-headers{flex-direction:column;gap:15px}
+  .tab-right{width:100%;box-sizing:border-box}
+  .hero-form{flex-direction:column;gap:12px}
+  .challenge-action{flex-wrap:wrap;gap:10px}
+  .form-footer-notice-block{flex-direction:column;gap:12px}
+  .badge-circle-wrap{margin-left:0}
+  .challenge-title{font-size:clamp(1.4rem,6vw,2rem)}
+  .call-us-title{font-size:clamp(1.6rem,6vw,2.5rem)}
+  .audit-box{max-width:100%}
+  .hero-form{max-width:100%}
+}
+</style>
+<style>
+/* ── GSAP Animation Initial States ── */
+.gsap-init { opacity: 0; }
+
+/* Hide elements before GSAP runs to prevent flash */
+.challenge-badge-row,
+.challenge-sub,
+.challenge-action,
+.call-us-title,
+.call-us-desc,
+.btn-how-it-works,
+.audit-box,
+.tab-headers,
+.agency-card,
+.skeptical-container {
+  opacity: 0;
+}
+
+.particle {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+}
+
+.cursor-glow {
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,56,136,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+}
+
+.agency-card {
+  position: relative;
+  overflow: hidden;
+}
+.agency-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.agency-card > * { position: relative; z-index: 1; }
+.agency-card.purple-border::before { background: radial-gradient(circle at 50% 0%, rgba(155,93,229,0.18), transparent 70%); }
+.agency-card.orange-border::before { background: radial-gradient(circle at 50% 0%, rgba(244,161,53,0.18), transparent 70%); }
+.agency-card.pink-border::before   { background: radial-gradient(circle at 50% 0%, rgba(230,56,136,0.18), transparent 70%); }
+.agency-card:hover::before { opacity: 1; }
+
+.char-split { display: inline-block; }
+
+/* ── Challenge Popup Modal ── */
+.challenge-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 4, 18, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.challenge-modal-box {
+  background: linear-gradient(160deg, #16101f 0%, #0e0819 100%);
+  border: 1px solid rgba(230,56,136,0.25);
+  border-radius: 18px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 36px 36px 30px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(230,56,136,0.08);
+}
+
+.challenge-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.challenge-modal-close:hover {
+  background: rgba(230,56,136,0.25);
+  transform: rotate(90deg);
+}
+
+.challenge-modal-box .why-do-this,
+.challenge-modal-box .hero-form,
+.challenge-modal-box .form-footer-notice-block {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+.challenge-modal-box .hero-form {
+  margin-top: 22px;
+}
+
+.challenge-modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg, #e63888, #f4a135);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.challenge-modal-submit {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #e63888, #f4a135);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.challenge-modal-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(230,56,136,0.35);
+}
+
+@media (max-width: 600px) {
+  .challenge-modal-box { padding: 28px 22px 24px; }
+}
+</style>
+</head>
+<body class="page-100k">
+
+ <header class="main-header">
+  <div class="logo"><a href="index.html"><img src="media/logo-new.png" alt="Revacity" fetchpriority="high" /></a></div>
+
+  <nav class="nav-center">
+      <a href="index.html" data-text="The Collapse">The Collapse</a>
+      <a href="about.html" data-text="About Us">About Us</a>
+      <a href="before-judging-us.html" data-text="Before Judging">Before Judging</a>
+      <a href="compare.html" data-text="Compare">Compare</a>
+      <a href="blog.html" data-text="Blog">Blog</a>
+  </nav>
+
+  <div style="display: flex; align-items: center; gap: 20px;">
+
+      <div class="header-buttons">
+          <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant">
+              <span>Start a Warrant</span>
+          </a>
+          <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward">
+              <span>$100k Reward</span>
+          </a>
+      </div>
+      <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
+  </div>
+</header>
+
+<div class="mobile-slide-menu" id="mobile-menu">
+    <div class="close-menu" id="close-menu">
+        <span></span>
+        <span></span>
+    </div>
+
+    <a href="index.html" class="menu-item" style="--i: 1;">The Collapse</a>
+    <a href="about.html" class="menu-item" style="--i: 2;">About Us</a>
+    <a href="before-judging-us.html" class="menu-item" style="--i: 3;">Before Judging</a>
+    <a href="compare.html" class="menu-item" style="--i: 4;">Compare</a>
+    <a href="blog.html" class="menu-item" style="--i: 5;">Blog</a>
+
+    <div class="mobile-menu-cta" style="--i: 6;">
+        <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant"><span>Start a Warrant</span></a>
+        <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward"><span>$100k Reward</span></a>
+    </div>
+</div>
+
+<section id="hero">
+  <div class="hero-left">
+    <div class="challenge-badge-row">
+      <h2 class="challenge-title">The $100K challenge</h2>
+      <img src="media/100k.png" alt="Money Bag" class="challenge-img">
+    </div>
+    <h3 class="challenge-sub">Think You Don't Need Us?</h3>
+    <div class="challenge-action">
+      <p>Get this in cash if you proof it</p>
+      <a href="#" class="btn-challenge" id="open-challenge-modal">Take the Challenge &rarr;</a>
+    </div>
+    <h1 class="call-us-title"><span>Call Us</span> what you want</h1>
+    <p class="call-us-desc">
+      Crazy, Bold, arrogant. Disagree with many ideas and concepts.<br>
+      But there is one Fact we can't ignore: <span class="highlight">If it is efficient and getting the desired results, <span style="color:#f24068;">Then Why Not?</span></span>
+    </p>
+    <a href="about.html" class="btn-how-it-works">How It Works</a>
+    <div class="audit-box">
+      us. We'll audit your current revenue engine. If it's already optimized to frontier standards, the money is yours. No strings. No catch. Just facts.
+    </div>
+
+    <div class="skeptical-container">
+      <h3 class="skeptical-title">Still skeptical?</h3>
+      <p class="skeptical-text">Good. Skeptics make the best clients.</p>
+      <div class="compare-action-row">
+        <div class="compare-label-text">
+          Compare us with others<br>o you can know more
+        </div>
+        <a href="compare.html" class="btn-go-purple">GO</a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="hero-right">
+    <div class="tab-headers">
+      <div class="tab-left">
+        <h3>WE MIGHT NOT BE THE ONLY ONE</h3>
+        <div class="but-accent">BUT</div>
+        <p>We are the Unfair Choice for your competitors.</p>
+      </div>
+      <div class="tab-right">
+        <h3>WHY YOUR CURRENT AGENCY IS DYING.</h3>
+        <p>THE LEGACY ROAST</p>
+      </div>
+    </div>
+    <div class="agency-card purple-border">
+      <div class="card-label">Traditional Agencies</div>
+      <div class="card-desc">
+        Wthout the fan about the name, are n't they still doing this<br><br>
+        They sell time and headcount. You pay for junior account executives to learn on your brand. Their "strategy" is a 200-slide deck that says nothing. They have frameworks. We have outcomes.
+      </div>
+    </div>
+    <div class="agency-card orange-border">
+      <div class="card-label">Performance Agencies</div>
+      <h3 class="card-title">The Arbitrage Shops</h3>
+      <div class="card-desc">
+        They buy cheap traffic and mark it up. No human stack. No revenue engineering. Just spreadsheets with your money going to Meta and Google. Congratulations, you hired a very expensive invoice forwarder.
+      </div>
+    </div>
+    <div class="agency-card pink-border">
+      <div class="card-label">AI Implementation Firms</div>
+      <h3 class="card-title">The Agent-Washers</h3>
+      <div class="card-desc">
+        They rebranded rigid workflows as "autonomous agents" and called it innovation. They handle your tech stack but miss the revenue synergy entirely. You got AI theater. We build AI that banks.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="challenge-modal-overlay" id="challenge-modal-overlay">
+  <div class="challenge-modal-box">
+    <button type="button" class="challenge-modal-close" id="close-challenge-modal" aria-label="Close">&times;</button>
+    <h3 class="challenge-modal-title">Take the $100K Challenge</h3>
+    <div class="why-do-this">
+      <h4>Why would do this?</h4>
+      <p>Because we're tired of the industry pretending that everyone is equally capable.<br /> <span>We're not.</span> And we're willing to prove it.</p>
+    </div>
+    <div class="hero-form">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@company.com">
+      </div>
+    </div>
+    <div class="form-footer-notice-block">
+      <ul class="form-notice-list">
+        <li>Read our terms and condition,</li>
+        <li>Sharing an access and data will gives you more opportunity to win or not get disapponted</li>
+      </ul>
+      <div class="badge-circle-wrap">
+        <img src="media/red-trademark.png" alt="Terms and Conditions Badge" class="conditions-badge">
+      </div>
+    </div>
+    <button type="button" class="challenge-modal-submit">Submit My Entry</button>
+  </div>
+</div>
+
+<div class="creative-footer-reveal-container" id="site-footer">
+  <footer class="creative-tech-footer">
+    <div class="footer-top-glow-line"></div>
+
+    <div class="footer-grid-inner">
+      <div class="footer-brand-column">
+        <img src="REVacity.png" alt="REVacity" style="width:180px; height:auto;" />
+        <p class="footer-brand-tagline">
+          Observability platforms and autonomous orchestration frameworks for high-fidelity agentic systems.
+        </p>
+      </div>
+
+      <div class="footer-links-grid">
+        <div class="footer-link-group">
+            <h4 class="group-title">STRUCTURE</h4>
+            <a href="index.html" class="footer-link-item"><span class="link-num">01 //</span> The Collapse</a>
+            <a href="about.html" class="footer-link-item"><span class="link-num">02 //</span> About Us</a>
+            <a href="our-architecture.html" class="footer-link-item"><span class="link-num">03 //</span> Our Architecture</a>
+        </div>
+
+        <div class="footer-link-group">
+            <h4 class="group-title">STRUCTURE</h4>
+            <a href="before-judging-us.html" class="footer-link-item"><span class="link-num">04 //</span> Before Judging</a>
+            <a href="compare.html" class="footer-link-item"><span class="link-num">05 //</span> Compare</a>
+            <a href="blog.html" class="footer-link-item"><span class="link-num">06 //</span>Blog</a>
+        </div>
+      </div>
+
+      <div class="footer-actions-column">
+        <h4 class="group-title">SYSTEM INTERACTION</h4>
+        <div class="footer-subscribe-wrapper">
+          <input type="email" placeholder="Enter operator email..." class="footer-input-field" />
+          <button type="button" class="footer-submit-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+        <div class="footer-meta-stamps">
+                     <div class="footer-socials-row">
+                    <a href="#" class="social-icon-btn" aria-label="LinkedIn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="X (Twitter)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Facebook">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Instagram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+                </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <p class="copyright-text">&copy; 2026 REVACITY . ALL PROTOCOLS RESERVED.</p>
+      <div class="footer-legal-links">
+          <a href="privacy.html">PRIVACY DECREE</a>
+          <span class="divider">/</span>
+          <a href="terms.html">TERMINAL TERMS</a>
+          <span class="divider">/</span>
+          <a href="security-clearance.html">SECURITY CLEARANCE</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function() {
+  const hamburger   = document.getElementById('hamburger');
+  const mobileMenu  = document.getElementById('mobile-menu');
+  const closeMenuBtn = document.getElementById('close-menu');
+  if (!hamburger || !mobileMenu || !closeMenuBtn) return;
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.add('active');
+    mobileMenu.classList.add('active');
+  });
+  const closeMenu = () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+  };
+  closeMenuBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+<!-- GSAP + ScrollTrigger CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+(function() {
+  /* Force scroll to top immediately — before anything else runs */
+  if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.ticker.lagSmoothing(1000, 16);
+
+  /* ── 1. Cursor Glow ── */
+  const glow = document.createElement('div');
+  glow.className = 'cursor-glow';
+  document.body.appendChild(glow);
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  gsap.ticker.add(() => {
+    gsap.set(glow, { x: mx, y: my });
+  });
+
+  /* ── 2. Floating Particles ── */
+  const colors = ['#e63888','#9b5de5','#f4a135'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = gsap.utils.random(4, 12);
+    gsap.set(p, {
+      width: size, height: size,
+      x: gsap.utils.random(0, window.innerWidth),
+      y: gsap.utils.random(0, window.innerHeight),
+      backgroundColor: colors[i % 3],
+      opacity: gsap.utils.random(0.15, 0.4)
+    });
+    document.body.appendChild(p);
+    gsap.to(p, {
+      y: '-=' + gsap.utils.random(80, 200),
+      x: '+=' + gsap.utils.random(-60, 60),
+      opacity: 0,
+      duration: gsap.utils.random(4, 9),
+      delay: gsap.utils.random(0, 5),
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut'
+    });
+  }
+
+  /* ── 3. Header entrance ── */
+  gsap.set('.main-header', { y: -80, autoAlpha: 0 });
+  gsap.to('.main-header', { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', delay: 0.1 });
+
+  /* ── 4. Hero Left — staggered entrance ── */
+  const heroTL = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.2 });
+
+  heroTL
+    .fromTo('.challenge-badge-row', { y: 60, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9 })
+    .fromTo('.challenge-sub',       { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, '-=0.5')
+    .fromTo('.challenge-action',    { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, '-=0.45')
+    .fromTo('.call-us-title',       { y: 50, autoAlpha: 0, scale: 0.95 }, { y: 0, autoAlpha: 1, scale: 1, duration: 0.8 }, '-=0.4')
+    .fromTo('.call-us-desc',        { y: 25, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6 }, '-=0.35')
+    .fromTo('.btn-how-it-works',    { y: 20, autoAlpha: 0, scale: 0.9 }, { y: 0, autoAlpha: 1, scale: 1, duration: 0.5 }, '-=0.3')
+    .fromTo('.audit-box',           { x: -40, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.7 }, '-=0.2');
+
+  /* ── 5. Hero Right — slide in from right ── */
+  gsap.fromTo('.tab-headers',
+    { x: 80, autoAlpha: 0 },
+    { x: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', delay: 0.7 }
+  );
+  gsap.fromTo('.agency-card',
+    { x: 60, autoAlpha: 0 },
+    { x: 0, autoAlpha: 1, stagger: 0.18, duration: 0.8, ease: 'power3.out', delay: 0.9 }
+  );
+  gsap.fromTo('.skeptical-container',
+    { y: 40, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.7, ease: 'back.out(1.5)', delay: 1.4 }
+  );
+
+  /* ── 6. Challenge image bounce ── */
+  gsap.fromTo('.challenge-img',
+    { scale: 0, rotation: -15, autoAlpha: 0 },
+    { scale: 1, rotation: 0, autoAlpha: 1, duration: 1, ease: 'elastic.out(1, 0.4)', delay: 0.5 }
+  );
+  gsap.to('.challenge-img', {
+    y: -12, rotation: 5, duration: 2.5,
+    ease: 'sine.inOut', repeat: -1, yoyo: true, delay: 1.5
+  });
+
+  /* ── 7. Scroll-triggered card reveals ── */
+  gsap.utils.toArray('.agency-card').forEach((card, i) => {
+    const border = card.classList.contains('purple-border') ? '#9b5de5'
+                 : card.classList.contains('orange-border') ? '#f4a135'
+                 : '#e63888';
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 85%',
+      onEnter: () => {
+        gsap.to(card, {
+          boxShadow: `0 0 30px 0 ${border}55, 0 4px 24px rgba(0,0,0,0.4)`,
+          duration: 0.6
+        });
+      }
+    });
+
+    card.addEventListener('mouseenter', () => {
+      gsap.to(card, { y: -6, scale: 1.02, duration: 0.35, ease: 'power2.out' });
+    });
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, { y: 0, scale: 1, duration: 0.4, ease: 'power2.out',
+        boxShadow: 'none' });
+    });
+  });
+
+  /* ── 8. Audit box text typing effect ── */
+  ScrollTrigger.create({
+    trigger: '.audit-box',
+    start: 'top 85%',
+    onEnter: () => {
+      gsap.from('.audit-box', {
+        scaleX: 0, transformOrigin: 'left center',
+        duration: 0.8, ease: 'power3.out'
+      });
+    },
+    once: true
+  });
+
+  /* ── 10. Call Us title fade-up on scroll ── */
+  const callTitle = document.querySelector('.call-us-title');
+  if (callTitle) {
+    ScrollTrigger.create({
+      trigger: callTitle,
+      start: 'top 80%',
+      onEnter: () => {
+        gsap.from(callTitle, {
+          y: 40, opacity: 0, duration: 0.8, ease: 'power3.out'
+        });
+      },
+      once: true
+    });
+  }
+
+  /* ── 11. Tab headers horizontal scroll-reveal ── */
+  gsap.from('.tab-left', {
+    x: -50, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '.tab-headers', start: 'top 85%' }
+  });
+  gsap.from('.tab-right', {
+    x: 50, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '.tab-headers', start: 'top 85%' }
+  });
+
+  /* ── 12. Skeptical section pop ── */
+  ScrollTrigger.create({
+    trigger: '.skeptical-container',
+    start: 'top 88%',
+    onEnter: () => {
+      gsap.from('.skeptical-title', {
+        scale: 0.6, opacity: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)'
+      });
+      gsap.from('.skeptical-text', {
+        x: 30, opacity: 0, duration: 0.5, delay: 0.2, ease: 'power2.out'
+      });
+      gsap.from('.compare-action-row', {
+        y: 20, opacity: 0, duration: 0.5, delay: 0.35, ease: 'power2.out'
+      });
+    },
+    once: true
+  });
+
+  /* ── 13. Button magnetic hover (mild) ── */
+  document.querySelectorAll('.btn-challenge, .btn-go-purple, .btn-how-it-works, .btn-reward, .btn-warrant').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const dx = (e.clientX - rect.left - rect.width / 2) * 0.25;
+      const dy = (e.clientY - rect.top - rect.height / 2) * 0.25;
+      gsap.to(btn, { x: dx, y: dy, duration: 0.3, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  /* ── 14. Footer reveal ── */
+  gsap.from('#site-footer', {
+    y: 80, opacity: 0, duration: 1.2, ease: 'power3.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 92%' }
+  });
+  gsap.from('.footer-brand-column', {
+    x: -40, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 88%' }
+  });
+  gsap.from('.footer-link-group', {
+    y: 30, opacity: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 85%' }
+  });
+  gsap.from('.footer-actions-column', {
+    x: 40, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 88%' }
+  });
+  gsap.from('.footer-bottom-bar', {
+    y: 20, opacity: 0, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '.footer-bottom-bar', start: 'top 98%' }
+  });
+
+  /* ── 15. Hero background ambient parallax ── */
+  gsap.to('#hero', {
+    backgroundPositionY: '30%',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+
+  /* ── 16. Card label shimmer on scroll enter ── */
+  gsap.utils.toArray('.card-label').forEach(label => {
+    ScrollTrigger.create({
+      trigger: label,
+      start: 'top 88%',
+      onEnter: () => {
+        gsap.from(label, {
+          backgroundSize: '0% 100%',
+          opacity: 0.5,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      },
+      once: true
+    });
+  });
+
+  /* ── 17. Nav link hover underline ── */
+  document.querySelectorAll('.nav-center a').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      gsap.to(link, { letterSpacing: '0.03em', duration: 0.2, ease: 'power1.out' });
+    });
+    link.addEventListener('mouseleave', () => {
+      gsap.to(link, { letterSpacing: 'normal', duration: 0.3, ease: 'power1.out' });
+    });
+  });
+
+  /* ── 18. Social icons bounce on hover ── */
+  document.querySelectorAll('.social-icon-btn').forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      gsap.to(icon, { scale: 1.3, rotation: 10, duration: 0.3, ease: 'back.out(2)' });
+    });
+    icon.addEventListener('mouseleave', () => {
+      gsap.to(icon, { scale: 1, rotation: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  /* ── 19. Form input focus glow ── */
+  document.querySelectorAll('input[type="text"], input[type="email"]').forEach(input => {
+    input.addEventListener('focus', () => {
+      gsap.to(input, { boxShadow: '0 0 0 2px #e63888, 0 4px 20px rgba(230,56,136,0.2)', duration: 0.3 });
+    });
+    input.addEventListener('blur', () => {
+      gsap.to(input, { boxShadow: 'none', duration: 0.3 });
+    });
+  });
+
+  /* ── 20. Challenge Modal Popup ── */
+  const modalOverlay = document.getElementById('challenge-modal-overlay');
+  const modalBox = modalOverlay ? modalOverlay.querySelector('.challenge-modal-box') : null;
+  const openModalBtn = document.getElementById('open-challenge-modal');
+  const closeModalBtn = document.getElementById('close-challenge-modal');
+
+  function openChallengeModal(e) {
+    if (e) e.preventDefault();
+    gsap.set(modalOverlay, { visibility: 'visible' });
+    gsap.to(modalOverlay, { autoAlpha: 1, duration: 0.35, ease: 'power2.out' });
+    gsap.fromTo(modalBox,
+      { y: 40, scale: 0.92, autoAlpha: 0 },
+      { y: 0, scale: 1, autoAlpha: 1, duration: 0.5, ease: 'back.out(1.6)', delay: 0.05 }
+    );
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeChallengeModal() {
+    gsap.to(modalBox, { y: 30, scale: 0.94, autoAlpha: 0, duration: 0.3, ease: 'power2.in' });
+    gsap.to(modalOverlay, {
+      autoAlpha: 0, duration: 0.35, ease: 'power2.in', delay: 0.1,
+      onComplete: () => {
+        gsap.set(modalOverlay, { visibility: 'hidden' });
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  if (openModalBtn) openModalBtn.addEventListener('click', openChallengeModal);
+  if (closeModalBtn) closeModalBtn.addEventListener('click', closeChallengeModal);
+  if (modalOverlay) {
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeChallengeModal();
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay && getComputedStyle(modalOverlay).visibility === 'visible') {
+      closeChallengeModal();
+    }
+  });
+
+  const submitBtn = document.querySelector('.challenge-modal-submit');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', () => {
+      gsap.to(submitBtn, {
+        scale: 0.95, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut'
+      });
+    });
+  }
+
+  ScrollTrigger.refresh();
+})();
+</script>
+
+</body>
+</html>

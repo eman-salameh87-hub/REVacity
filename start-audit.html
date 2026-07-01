@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REVacity | Start Audit</title>
+<script>if (history.scrollRestoration) history.scrollRestoration = 'manual'; window.scrollTo(0,0);</script>
+<link rel="icon" type="image/png" href="media/icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght=0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* Page-specific overrides */
+:root{--pink:#e63888;--purple:#9b5de5;--gold:#f4a135;--white:#ffffff;--dim:rgba(255,255,255,0.6);--bg:#0e0819}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif}
+
+/* Hero */
+#hero{width:100vw;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 9vw 60px;position:relative;z-index:1}
+.hero-eyebrow{font-family:'Syne',sans-serif;font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:#e64565;margin-bottom:0.4rem;font-weight:500}
+.hero-headline{font-family:'Syne',sans-serif;font-size:clamp(2rem,5.5vw,3rem);font-weight:600;line-height:1.12;letter-spacing:0em;color:#ffffff;margin-bottom:2rem}
+.hero-headline .hl-purple{background-image:linear-gradient(to right,#c084fc 0%,#e64565 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;display:inline-block}
+.hero-subhead-block{margin-bottom:2rem;max-width:640px}
+.hero-subhead{font-family:'Syne',sans-serif;font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:700;line-height:1.25;color:#ffffff;margin-bottom:0}
+.hero-subhead .hl-dim{color:rgba(255,255,255,0.35)}
+.hero-body{max-width:800px;font-family:'DM Sans',sans-serif;font-size:clamp(0.88rem,1.3vw,1rem);font-weight:300;line-height:1.65;color:rgba(255,255,255,0.52)}
+
+/* Scroll-animation supports */
+.process-card{transform-style:preserve-3d}
+.btn-diagnostic{position:relative}
+
+/* Single animated accent line per audit row (overrides any native static border) */
+.audit-row{position:relative;border-left:none !important;box-shadow:none !important}
+.audit-row::before,.audit-row::after{display:none !important}
+.row-accent-bar{position:absolute;left:0;top:0;width:3px;height:100%;background:var(--row-accent);transform-origin:top center;transform:scaleY(0);box-shadow:0 0 14px var(--row-accent);border-radius:2px;pointer-events:none}
+
+/* "Book the diagnostic" inline link */
+.book-diagnostic-link{position:relative;display:inline-flex;align-items:center;gap:6px;color:#ffffff;text-decoration:none;cursor:pointer}
+.book-diagnostic-link strong{position:relative;color:#ffffff;background-image:linear-gradient(90deg,#e63888,#f4a135);background-repeat:no-repeat;background-size:0% 2px;background-position:0 100%;padding-bottom:2px;transition:background-size 0.45s cubic-bezier(0.22,1,0.36,1),color 0.3s ease}
+.book-diagnostic-link:hover strong{background-size:100% 2px;color:#ffd9ea}
+.book-diagnostic-arrow{display:inline-block;opacity:0;transform:translateX(-8px);transition:opacity 0.35s ease,transform 0.35s cubic-bezier(0.22,1,0.36,1);color:#f4a135;font-weight:700}
+.book-diagnostic-link:hover .book-diagnostic-arrow{opacity:1;transform:translateX(0)}
+
+/* Scroll-back-to-top button */
+.scroll-top-btn{position:fixed;right:28px;bottom:28px;width:48px;height:48px;border-radius:50%;border:none;background:rgba(14,8,25,0.7);backdrop-filter:blur(6px);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;visibility:hidden;transform:translateY(16px) scale(0.85);color:#ffffff;padding:0}
+.scroll-top-ring{position:absolute;top:0;left:0;transform:rotate(-90deg)}
+.scroll-top-ring-track{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:2}
+.scroll-top-ring-progress{fill:none;stroke:url(#scroll-top-gradient);stroke-width:2;stroke-linecap:round;stroke-dasharray:131.9;stroke-dashoffset:131.9}
+.scroll-top-arrow{position:relative;z-index:1}
+.scroll-top-btn:hover{background:rgba(230,56,136,0.18)}
+@media(max-width:768px){.scroll-top-btn{right:18px;bottom:18px;width:42px;height:42px}}
+
+</style>
+</head>
+
+<body class="page-start-audit">
+
+ <header class="main-header">
+    <div class="logo"><a href="index.html"><img src="media/logo-new.png" alt="Revacity" fetchpriority="high" /></a></div>
+
+    <nav class="nav-center">
+        <a href="index.html" data-text="The Collapse">The Collapse</a>
+        <a href="about.html" data-text="About Us">About Us</a>
+        <a href="before-judging-us.html" data-text="Before Judging">Before Judging</a>
+        <a href="compare.html" data-text="Compare">Compare</a>
+        <a href="blog.html" data-text="Blog">Blog</a>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 20px;">
+
+        <div class="header-buttons">
+            <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant">
+                <span>Start a Warrant</span>
+            </a>
+            <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward">
+                <span>$100k Reward</span>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
+<div class="mobile-slide-menu" id="mobile-menu">
+    <div class="close-menu" id="close-menu">
+        <span></span>
+        <span></span>
+    </div>
+
+    <a href="index.html" class="menu-item" style="--i: 1;">The Collapse</a>
+    <a href="about.html" class="menu-item" style="--i: 2;">About Us</a>
+    <a href="before-judging-us.html" class="menu-item" style="--i: 3;">Before Judging</a>
+    <a href="compare.html" class="menu-item" style="--i: 4;">Compare</a>
+    <a href="blog.html" class="menu-item" style="--i: 5;">Blog</a>
+
+    <div class="mobile-menu-cta" style="--i: 6;">
+        <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant"><span>Start a Warrant</span></a>
+        <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward"><span>$100k Reward</span></a>
+    </div>
+</div>
+
+
+<section id="hero">
+  <p class="hero-eyebrow">The Diagnostic</p>
+  <h1 class="hero-headline">We don't audit to<br>impress. <span class="hl-purple">We audit to expose.</span></h1>
+  <div class="hero-subhead-block">
+    <p class="hero-subhead">Every engagement starts with<br>an audit. <span class="hl-dim">No exceptions.</span></p>
+  </div>
+  <p class="hero-body">Every engagement starts with a diagnostic. Not a sales pitch disguised as a consultation. An actual forensic examination of your revenue reality. If we can't find a problem worth solving, we'll tell you.</p>
+</section>
+<section id="process">
+  <p class="process-eyebrow">The Process</p>
+  <h2 class="process-title">How the audit works.</h2>
+  <div class="process-grid">
+    <div class="process-card"><div class="process-card-num">01</div><h3 class="process-card-title">Request</h3><p class="process-card-body">You tell us what's wrong — or what you suspect.</p></div>
+    <div class="process-card"><div class="process-card-num">02</div><h3 class="process-card-title">Access</h3><p class="process-card-body">We get read-only access to the relevant systems.</p></div>
+    <div class="process-card"><div class="process-card-num">03</div><h3 class="process-card-title">Analysis</h3><p class="process-card-body">72 hours of deep forensic analysis.</p></div>
+    <div class="process-card"><div class="process-card-num">04</div><h3 class="process-card-title">Delivery</h3><p class="process-card-body">A clear map of what's broken, what it costs, and what to do.</p></div>
+  </div>
+</section>
+<section id="audit-types">
+  <h2 class="audit-types-title">Each designed to surface what's hidden.</h2>
+  <div class="audit-row" style="--row-accent:#9b5de5">
+    <div class="audit-left">
+      <p class="audit-question">Where is the money going?</p>
+      <h3 class="audit-name">Revenue Audit</h3>
+      <p class="audit-desc">A forensic examination of your revenue topology — pricing architecture, margin structure, promotional impact, channel economics, and demand patterns. We find the leaks you didn't know existed.</p>
+    </div>
+    <div class="audit-right">
+      <p class="audit-deliverables-label">Deliverables</p>
+      <ul class="audit-deliverables-list">
+        <li>Revenue topology map</li><li>Leak identification report</li><li>Pricing elasticity analysis</li><li>Margin architecture review</li><li>Prioritized fix roadmap</li>
+      </ul>
+    </div>
+  </div>
+  <div class="audit-row" style="--row-accent:#e63888">
+    <div class="audit-left">
+      <p class="audit-question">Why aren't you growing?</p>
+      <h3 class="audit-name">Growth Audit</h3>
+      <p class="audit-desc">A structural analysis of your growth system — acquisition loops, retention mechanics, expansion pathways, market positioning, and competitive dynamics. We find where momentum is stuck.</p>
+    </div>
+    <div class="audit-right">
+      <p class="audit-deliverables-label">Deliverables</p>
+      <ul class="audit-deliverables-list">
+        <li>Growth system map</li><li>Acquisition loop analysis</li><li>Retention mechanics review</li><li>Market positioning assessment</li><li>Growth engineering roadmap</li>
+      </ul>
+    </div>
+  </div>
+  <div class="audit-row" style="--row-accent:#f4a135">
+    <div class="audit-left">
+      <p class="audit-question">What does your brand actually mean?</p>
+      <h3 class="audit-name">Cognitive Audit</h3>
+      <p class="audit-desc">An examination of what your brand means in the mind of your market. We identify gaps between intended meaning and perceived meaning — and the revenue impact of that gap.</p>
+    </div>
+    <div class="audit-right">
+      <p class="audit-deliverables-label">Deliverables</p>
+      <ul class="audit-deliverables-list">
+        <li>Meaning gap analysis</li><li>Perception vs. reality map</li><li>Cognitive reframe strategy</li>
+      </ul>
+    </div>
+  </div>
+  <div class="audit-row" style="--row-accent:#9b5de5">
+    <div class="audit-left">
+      <p class="audit-question">Where is legacy dragging you?</p>
+      <h3 class="audit-name">Modernization Audit</h3>
+      <p class="audit-desc">A technical and operational assessment of your systems, processes, and tools. We identify where legacy infrastructure is creating friction, cost, or competitive disadvantage.</p>
+    </div>
+    <div class="audit-right">
+      <p class="audit-deliverables-label">Deliverables</p>
+      <ul class="audit-deliverables-list">
+        <li>Tech debt quantified</li><li>Process friction mapped</li><li>Modernization roadmap</li>
+      </ul>
+    </div>
+  </div>
+  <div class="audit-row" style="--row-accent:#3b82f6">
+    <div class="audit-left">
+      <p class="audit-question">What are you not seeing?</p>
+      <h3 class="audit-name">Situational Audit</h3>
+      <p class="audit-desc">A market and competitive intelligence assessment. We map the forces acting on your business — competitive moves, market shifts, regulatory changes — that you may not be seeing.</p>
+    </div>
+    <div class="audit-right">
+      <p class="audit-deliverables-label">Deliverables</p>
+      <ul class="audit-deliverables-list">
+        <li>Competitive landscape mapped</li><li>Blind spots identified</li><li>Strategic context delivered</li>
+      </ul>
+    </div>
+  </div>
+  <div class="audit-row" style="--row-accent:#e63888">
+    <div class="audit-left">
+      <p class="audit-question">Is comfort killing your growth?</p>
+      <h3 class="audit-name">Satisfaction Audit</h3>
+      <p class="audit-desc">The most provocative audit. We assess whether your current 'satisfaction' with performance is actually masking decline. Are you comparing to your past — or to your potential?</p>
+    </div>
+    <div class="audit-right">
+      <p class="audit-deliverables-label">Deliverables</p>
+      <ul class="audit-deliverables-list">
+        <li>Potential vs. actual gap</li><li>Comfort zones identified</li><li>Wake-up call delivered</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section id="closing-cta">
+  <h2 class="closing-title">What makes our audits different.</h2>
+  <p class="closing-body">Most agency "audits" are sales tools. They find just enough problems to justify a retainer, but not enough to actually solve anything. Ours are the opposite.</p>
+  <p class="closing-body">We audit to expose the full picture — even the parts that don't lead to an engagement with us. If the problem is your team, we'll say so. If the problem is your product, we'll say so. If the problem doesn't exist, we'll say that too.</p>
+  <p class="closing-statement">The diagnostic is the first test of trust. If we can't be honest here, why would you trust us with your revenue?</p>
+  <p class="closing-book-label">Ready to see what's actually happening? <a href="start-audit.html" class="book-diagnostic-link"><strong>Book the diagnostic.</strong><span class="book-diagnostic-arrow">&rarr;</span></a></p>
+  <a href="#" class="btn-diagnostic">Book the Diagnostic<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</section>
+<div class="creative-footer-reveal-container" id="site-footer">
+  <footer class="creative-tech-footer">
+    <div class="footer-top-glow-line"></div>
+    <div class="footer-grid-inner">
+      <div class="footer-brand-column">
+        <img src="media/REVacity.png" alt="REVacity" style="width:180px;height:auto"/>
+        <p class="footer-brand-tagline">Observability platforms and autonomous orchestration frameworks for high-fidelity agentic systems.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-link-group">
+            <h4 class="group-title">STRUCTURE</h4>
+            <a href="index.html" class="footer-link-item"><span class="link-num">01 //</span> The Collapse</a>
+            <a href="about.html" class="footer-link-item"><span class="link-num">02 //</span> About Us</a>
+            <a href="our-architecture.html" class="footer-link-item"><span class="link-num">03 //</span> Our Architecture</a>
+        </div>
+
+        <div class="footer-link-group">
+            <h4 class="group-title">STRUCTURE</h4>
+            <a href="before-judging-us.html" class="footer-link-item"><span class="link-num">04 //</span> Before Judging</a>
+            <a href="compare.html" class="footer-link-item"><span class="link-num">05 //</span> Compare</a>
+            <a href="blog.html" class="footer-link-item"><span class="link-num">06 //</span>Blog</a>
+        </div>
+      </div>
+      <div class="footer-actions-column">
+        <h4 class="group-title">SYSTEM INTERACTION</h4>
+        <div class="footer-subscribe-wrapper">
+          <input type="email" placeholder="Enter operator email..." class="footer-input-field"/>
+          <button type="button" class="footer-submit-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+        </div>
+          <div class="footer-meta-stamps">
+                     <div class="footer-socials-row">
+                    <a href="#" class="social-icon-btn" aria-label="LinkedIn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="X (Twitter)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Facebook">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Instagram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+                </div>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+        <p class="copyright-text">&copy; 2026 REVACITY . ALL PROTOCOLS RESERVED.</p>
+        <div class="footer-legal-links">
+            <a href="privacy.html">PRIVACY DECREE</a>
+            <span class="divider">/</span>
+            <a href="terms.html">TERMINAL TERMS</a>
+            <span class="divider">/</span>
+            <a href="security-clearance.html">SECURITY CLEARANCE</a>
+        </div>
+    </div>
+  </footer>
+</div>
+
+<button type="button" id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll back to top">
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="scroll-top-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#e63888"></stop>
+        <stop offset="100%" stop-color="#9b5de5"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+  <svg class="scroll-top-ring" width="48" height="48" viewBox="0 0 48 48">
+    <circle class="scroll-top-ring-track" cx="24" cy="24" r="21"></circle>
+    <circle class="scroll-top-ring-progress" cx="24" cy="24" r="21"></circle>
+  </svg>
+  <svg class="scroll-top-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="12" y1="19" x2="12" y2="5"></line>
+    <polyline points="5 12 12 5 19 12"></polyline>
+  </svg>
+</button>
+
+<script>
+(function(){
+  const hamburger=document.getElementById('hamburger');
+  const mobileMenu=document.getElementById('mobile-menu');
+  const closeMenuBtn=document.getElementById('close-menu');
+  if(!hamburger||!mobileMenu||!closeMenuBtn)return;
+  hamburger.addEventListener('click',()=>{hamburger.classList.add('active');mobileMenu.classList.add('active')});
+  const closeMenu=()=>{hamburger.classList.remove('active');mobileMenu.classList.remove('active')};
+  closeMenuBtn.addEventListener('click',closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
+})();
+</script>
+<script>
+(function(){
+  const canvases=document.querySelectorAll('.bolt-canvas');
+  if(!canvases.length)return;
+  const states=Array.from(canvases).map((canvas,i)=>({canvas,ctx:canvas.getContext('2d'),segs:[],alpha:0,timer:8+i*7}));
+  function makeBolt(x1,y1,x2,y2,rough,depth){
+    const segs=[];
+    function split(ax,ay,bx,by,d){
+      if(d===0){segs.push([ax,ay,bx,by]);return}
+      const mx=(ax+bx)/2+(Math.random()-0.5)*rough*(d/depth)*1.2;
+      const my=(ay+by)/2+(Math.random()-0.5)*rough*0.6;
+      split(ax,ay,mx,my,d-1);
+      split(mx,my,bx,by,d-1);
+      if(d===2&&Math.random()<0.45){
+        const fLen=rough*(0.3+Math.random()*0.5);
+        const angle=Math.atan2(by-ay,bx-ax)+(Math.random()-0.5)*1.2;
+        segs.push([mx,my,mx+Math.cos(angle)*fLen,my+Math.sin(angle)*fLen]);
+      }
+    }
+    split(x1,y1,x2,y2,depth);
+    return segs;
+  }
+  function resizeAll(){
+    states.forEach(({canvas})=>{const rect=canvas.getBoundingClientRect();canvas.width=rect.width||80;canvas.height=rect.height||40});
+  }
+  function drawBolt(ctx,segs,alpha,W,H){
+    if(!segs.length||alpha<=0)return;
+    ctx.save();ctx.globalAlpha=alpha*0.18;ctx.strokeStyle='rgba(180,90,255,1)';ctx.lineWidth=5;ctx.shadowColor='rgba(168,85,247,1)';ctx.shadowBlur=12;ctx.lineCap='round';
+    segs.forEach(([ax,ay,bx,by])=>{ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()});ctx.restore();
+    ctx.save();ctx.globalAlpha=alpha*0.42;ctx.strokeStyle='rgba(200,120,255,1)';ctx.lineWidth=1.8;ctx.shadowColor='rgba(180,90,255,0.9)';ctx.shadowBlur=6;ctx.lineCap='round';
+    segs.forEach(([ax,ay,bx,by])=>{ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()});ctx.restore();
+    ctx.save();ctx.globalAlpha=alpha*0.80;ctx.strokeStyle='rgba(220,170,255,1)';ctx.lineWidth=0.8;ctx.shadowBlur=3;ctx.lineCap='round';
+    segs.forEach(([ax,ay,bx,by])=>{ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()});ctx.restore();
+    ctx.save();ctx.globalAlpha=alpha*0.55;ctx.strokeStyle='rgba(255,248,255,1)';ctx.lineWidth=0.35;ctx.lineCap='round';
+    segs.forEach(([ax,ay,bx,by])=>{ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()});ctx.restore();
+    const tip=W,midY=H/2,aSize=7;
+    ctx.save();ctx.globalAlpha=alpha*0.55;ctx.fillStyle='#c084fc';ctx.shadowColor='rgba(192,132,252,1)';ctx.shadowBlur=14;
+    ctx.beginPath();ctx.moveTo(tip,midY);ctx.lineTo(tip-aSize*1.8,midY-aSize);ctx.lineTo(tip-aSize*1.8,midY+aSize);ctx.closePath();ctx.fill();ctx.restore();
+    ctx.save();ctx.globalAlpha=alpha*0.90;ctx.fillStyle='#e0aaff';ctx.shadowColor='rgba(255,255,255,0.8)';ctx.shadowBlur=6;
+    ctx.beginPath();ctx.moveTo(tip,midY);ctx.lineTo(tip-aSize*1.8,midY-aSize);ctx.lineTo(tip-aSize*1.8,midY+aSize);ctx.closePath();ctx.fill();ctx.restore();
+  }
+  function loop(){
+    states.forEach(state=>{
+      const{canvas,ctx}=state,W=canvas.width,H=canvas.height;
+      ctx.clearRect(0,0,W,H);
+      state.timer--;
+      if(state.timer<=0){
+        const rough=Math.min(H*0.35,18);
+        state.segs=makeBolt(0,H/2,W,H/2,rough,4);
+        state.alpha=1.0;
+        state.timer=10+Math.floor(Math.random()*18);
+      }
+      state.alpha=Math.max(0,state.alpha-0.05);
+      drawBolt(ctx,state.segs,state.alpha,W,H);
+    });
+    requestAnimationFrame(loop);
+  }
+  window.addEventListener('resize',()=>{resizeAll();states.forEach(s=>{s.segs=[];s.alpha=0})});
+  setTimeout(()=>{resizeAll();loop()},120);
+})();
+</script>
+<script>
+(function(){
+  const canvas=document.getElementById('feedback-loop-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  function getCard1(){return document.querySelector('.agent-card--red')}
+  function getCard4(){return document.querySelector('.agent-card--green')}
+  function resize(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight}
+  let dashOffset=0;
+  function draw(){
+    const W=canvas.width,H=canvas.height;
+    ctx.clearRect(0,0,W,H);
+    const c1=getCard1(),c4=getCard4();
+    if(!c1||!c4){requestAnimationFrame(draw);return}
+    const c1Rect=c1.getBoundingClientRect(),c4Rect=c4.getBoundingClientRect(),canvasRect=canvas.getBoundingClientRect();
+    const x4=c4Rect.right-canvasRect.left-(c4Rect.width*0.15);
+    const x1=c1Rect.left-canvasRect.left+(c1Rect.width*0.15);
+    const yTop=4,yBot=H-10;
+    const path=[{x:x4,y:yTop},{x:x4,y:yBot},{x:x1,y:yBot},{x:x1,y:yTop}];
+    dashOffset-=0.4;
+    ctx.save();ctx.strokeStyle='rgba(168,85,247,0.35)';ctx.lineWidth=4;ctx.lineCap='round';ctx.lineJoin='round';ctx.shadowColor='rgba(168,85,247,0.6)';ctx.shadowBlur=10;ctx.setLineDash([6,6]);ctx.lineDashOffset=dashOffset;
+    ctx.beginPath();ctx.moveTo(path[0].x,path[0].y);path.slice(1).forEach(p=>ctx.lineTo(p.x,p.y));ctx.stroke();ctx.restore();
+    ctx.save();ctx.strokeStyle='rgba(192,132,252,0.75)';ctx.lineWidth=1.5;ctx.lineCap='round';ctx.lineJoin='round';ctx.shadowColor='rgba(168,85,247,0.9)';ctx.shadowBlur=5;ctx.setLineDash([6,6]);ctx.lineDashOffset=dashOffset;
+    ctx.beginPath();ctx.moveTo(path[0].x,path[0].y);path.slice(1).forEach(p=>ctx.lineTo(p.x,p.y));ctx.stroke();ctx.restore();
+    const ax=x1,ay=yTop,arrowSize=7;
+    ctx.save();ctx.fillStyle='#c084fc';ctx.shadowColor='rgba(192,132,252,0.9)';ctx.shadowBlur=10;
+    ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax-arrowSize,ay+arrowSize*1.6);ctx.lineTo(ax+arrowSize,ay+arrowSize*1.6);ctx.closePath();ctx.fill();ctx.restore();
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);
+  setTimeout(()=>{resize();draw()},150);
+})();
+</script>
+
+<!-- GSAP + ScrollTrigger CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.ticker.lagSmoothing(1000, 16);
+
+  /* ── Header entrance ── */
+  gsap.set('.main-header', { y: -80, autoAlpha: 0 });
+  gsap.to('.main-header', { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', delay: 0.1 });
+
+  /* ── Nav link hover underline ── */
+  document.querySelectorAll('.nav-center a').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      gsap.to(link, { letterSpacing: '0.03em', duration: 0.2, ease: 'power1.out' });
+    });
+    link.addEventListener('mouseleave', () => {
+      gsap.to(link, { letterSpacing: 'normal', duration: 0.3, ease: 'power1.out' });
+    });
+  });
+
+  /* ── Button magnetic hover (mild) ── */
+  document.querySelectorAll('.btn-reward, .btn-warrant').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const dx = (e.clientX - rect.left - rect.width / 2) * 0.25;
+      const dy = (e.clientY - rect.top - rect.height / 2) * 0.25;
+      gsap.to(btn, { x: dx, y: dy, duration: 0.3, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  /* ── Footer reveal ── */
+  gsap.from('#site-footer', {
+    y: 80, opacity: 0, duration: 1.2, ease: 'power3.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 92%' }
+  });
+  gsap.from('.footer-brand-column', {
+    x: -40, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 88%' }
+  });
+  gsap.from('.footer-link-group', {
+    y: 30, opacity: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 85%' }
+  });
+  gsap.from('.footer-actions-column', {
+    x: 40, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 88%' }
+  });
+  gsap.from('.footer-bottom-bar', {
+    y: 20, opacity: 0, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '.footer-bottom-bar', start: 'top 98%' }
+  });
+
+  /* ── Social icons bounce on hover ── */
+  document.querySelectorAll('.social-icon-btn').forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      gsap.to(icon, { scale: 1.3, rotation: 10, duration: 0.3, ease: 'back.out(2)' });
+    });
+    icon.addEventListener('mouseleave', () => {
+      gsap.to(icon, { scale: 1, rotation: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  ScrollTrigger.refresh();
+})();
+</script>
+
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── Hero: cinematic mask reveal on load ── */
+  gsap.set('.hero-eyebrow', { autoAlpha: 0, x: -20 });
+  gsap.set('.hero-headline', { clipPath: 'inset(0 100% 0 0)' });
+  gsap.set('.hero-subhead', { autoAlpha: 0, y: 20 });
+  gsap.set('.hero-body', { autoAlpha: 0, y: 16 });
+
+  gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.3 })
+    .to('.hero-eyebrow', { autoAlpha: 1, x: 0, duration: 0.6 })
+    .to('.hero-headline', { clipPath: 'inset(0 0% 0 0)', duration: 1.1, ease: 'power4.inOut' }, '-=0.2')
+    .to('.hero-subhead', { autoAlpha: 1, y: 0, duration: 0.7 }, '-=0.5')
+    .to('.hero-body', { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.4');
+
+  /* ── Process: eyebrow/title rise, cards tilt in from alternating sides, numbers pop ── */
+  gsap.from('.process-eyebrow', {
+    autoAlpha: 0, y: 24, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '#process', start: 'top 80%' }
+  });
+  gsap.from('.process-title', {
+    autoAlpha: 0, y: 30, duration: 0.7, delay: 0.1, ease: 'power2.out',
+    scrollTrigger: { trigger: '#process', start: 'top 80%' }
+  });
+
+  gsap.utils.toArray('.process-card').forEach((card, i) => {
+    const dir = i % 2 === 0 ? -1 : 1;
+    gsap.fromTo(card,
+      { autoAlpha: 0, y: 50, rotateY: dir * 35, transformPerspective: 800 },
+      {
+        autoAlpha: 1, y: 0, rotateY: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 88%' }
+      }
+    );
+    const num = card.querySelector('.process-card-num');
+    if (num) {
+      gsap.fromTo(num,
+        { scale: 0, rotation: -90, autoAlpha: 0 },
+        {
+          scale: 1, rotation: 0, autoAlpha: 1, duration: 0.7, ease: 'back.out(2.2)', delay: 0.15,
+          scrollTrigger: { trigger: card, start: 'top 88%' }
+        }
+      );
+    }
+  });
+
+  /* ── Audit types: title reveal, alternating rows, growing accent bar, checklist stagger ── */
+  gsap.from('.audit-types-title', {
+    autoAlpha: 0, y: 30, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: '.audit-types-title', start: 'top 85%' }
+  });
+
+  gsap.utils.toArray('.audit-row').forEach((row, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'row-accent-bar';
+    row.prepend(bar);
+
+    const dir = i % 2 === 0 ? -1 : 1;
+    const left = row.querySelector('.audit-left');
+    const right = row.querySelector('.audit-right');
+    const listItems = row.querySelectorAll('.audit-deliverables-list li');
+
+    gsap.timeline({ scrollTrigger: { trigger: row, start: 'top 82%' } })
+      .fromTo(bar, { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: 'power2.out' })
+      .fromTo(left, { autoAlpha: 0, x: dir * -50 }, { autoAlpha: 1, x: 0, duration: 0.7, ease: 'power3.out' }, '-=0.6')
+      .fromTo(right, { autoAlpha: 0, x: dir * 50 }, { autoAlpha: 1, x: 0, duration: 0.7, ease: 'power3.out' }, '-=0.55')
+      .fromTo(listItems, { autoAlpha: 0, x: 14 }, { autoAlpha: 1, x: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' }, '-=0.35');
+  });
+
+  /* ── Closing CTA: mask reveal title, staggered copy, glowing CTA ── */
+  gsap.set('.closing-title', { clipPath: 'inset(0 100% 0 0)' });
+  gsap.timeline({ scrollTrigger: { trigger: '#closing-cta', start: 'top 75%' } })
+    .to('.closing-title', { clipPath: 'inset(0 0% 0 0)', duration: 1, ease: 'power4.inOut' })
+    .from('.closing-body', { autoAlpha: 0, y: 24, duration: 0.6, stagger: 0.15, ease: 'power2.out' }, '-=0.5')
+    .from('.closing-statement', { autoAlpha: 0, scale: 0.92, duration: 0.7, ease: 'back.out(1.6)' }, '-=0.2')
+    .from('.closing-book-label', { autoAlpha: 0, y: 16, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+    .from('.btn-diagnostic', { autoAlpha: 0, y: 16, scale: 0.9, duration: 0.5, ease: 'back.out(2)' }, '-=0.3');
+
+  gsap.to('.btn-diagnostic', {
+    boxShadow: '0 0 28px 4px rgba(230,56,136,0.45)',
+    duration: 1.6, repeat: -1, yoyo: true, ease: 'sine.inOut'
+  });
+
+  document.querySelectorAll('.book-diagnostic-link').forEach(link => {
+    const arrow = link.querySelector('.book-diagnostic-arrow');
+    link.addEventListener('mouseenter', () => {
+      gsap.fromTo(arrow, { x: -8, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.4, ease: 'back.out(2.5)' });
+      gsap.to(link, { letterSpacing: '0.01em', duration: 0.3, ease: 'power2.out' });
+    });
+    link.addEventListener('mouseleave', () => {
+      gsap.to(link, { letterSpacing: 'normal', duration: 0.3, ease: 'power2.out' });
+    });
+    link.addEventListener('mousemove', e => {
+      const r = link.getBoundingClientRect();
+      gsap.to(link, { x: (e.clientX - r.left - r.width / 2) * 0.04, y: (e.clientY - r.top - r.height / 2) * 0.12, duration: 0.3, ease: 'power2.out' });
+    });
+  });
+
+  document.querySelectorAll('.btn-diagnostic').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      gsap.to(btn, { x: (e.clientX - r.left - r.width / 2) * 0.2, y: (e.clientY - r.top - r.height / 2) * 0.3, duration: 0.3, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  ScrollTrigger.refresh();
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+<script>
+(function() {
+  if (typeof ScrollToPlugin !== 'undefined') gsap.registerPlugin(ScrollToPlugin);
+
+  const btn = document.getElementById('scroll-top-btn');
+  const ring = document.querySelector('.scroll-top-ring-progress');
+  if (!btn || !ring) return;
+
+  const CIRC = 131.9; // 2 * PI * r(21)
+  let ticking = false;
+
+  function update() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
+
+    ring.style.strokeDashoffset = CIRC - progress * CIRC;
+
+    if (scrollTop > 480) {
+      if (btn.dataset.visible !== 'true') {
+        btn.dataset.visible = 'true';
+        btn.style.visibility = 'visible';
+        gsap.to(btn, { autoAlpha: 1, y: 0, scale: 1, duration: 0.4, ease: 'back.out(2)' });
+      }
+    } else if (btn.dataset.visible === 'true') {
+      btn.dataset.visible = 'false';
+      gsap.to(btn, {
+        autoAlpha: 0, y: 16, scale: 0.85, duration: 0.3, ease: 'power2.in',
+        onComplete: () => { btn.style.visibility = 'hidden'; }
+      });
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  });
+  update();
+
+  btn.addEventListener('click', () => {
+    gsap.to(btn, { scale: 0.85, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' });
+    gsap.to(window, {
+      scrollTo: { y: 0 },
+      duration: 1.1,
+      ease: 'power3.inOut'
+    });
+    // Fallback for environments without the ScrollToPlugin
+    if (typeof ScrollToPlugin === 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    gsap.to(btn, { x: (e.clientX - r.left - r.width / 2) * 0.25, y: (e.clientY - r.top - r.height / 2) * 0.25, duration: 0.3, ease: 'power2.out' });
+  });
+  btn.addEventListener('mouseleave', () => {
+    gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+  });
+})();
+</script>
+</body>
+</html>

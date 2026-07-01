@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REVacity | Glossary</title>
+<link rel="icon" type="image/png" href="media/icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+<style>
+:root{--pink:#e63888;--purple:#9b5de5;--gold:#f4a135;--white:#ffffff;--dim:rgba(255,255,255,0.6);--bg:#0a0315}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+</style>
+</head>
+<body class="page-glossary">
+
+<header class="main-header">
+    <div class="logo"><a href="index.html"><img src="media/logo-new.png" alt="Revacity" fetchpriority="high" /></a></div>
+
+    <nav class="nav-center">
+        <a href="index.html" data-text="The Collapse">The Collapse</a>
+        <a href="about.html" data-text="About Us">About Us</a>
+        <a href="before-judging-us.html" data-text="Before Judging">Before Judging</a>
+        <a href="compare.html" data-text="Compare">Compare</a>
+        <a href="blog.html" data-text="Blog">Blog</a>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 20px;">
+
+        <div class="header-buttons">
+            <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant">
+                <span>Start a Warrant</span>
+            </a>
+            <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward">
+                <span>$100k Reward</span>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
+<div class="mobile-slide-menu" id="mobile-menu">
+    <div class="close-menu" id="close-menu">
+        <span></span>
+        <span></span>
+    </div>
+
+    <a href="index.html" class="menu-item" style="--i: 1;">The Collapse</a>
+    <a href="about.html" class="menu-item" style="--i: 2;">About Us</a>
+    <a href="before-judging-us.html" class="menu-item" style="--i: 3;">Before Judging</a>
+    <a href="compare.html" class="menu-item" style="--i: 4;">Compare</a>
+    <a href="blog.html" class="menu-item" style="--i: 5;">Blog</a>
+
+    <div class="mobile-menu-cta" style="--i: 6;">
+        <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant"><span>Start a Warrant</span></a>
+        <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward"><span>$100k Reward</span></a>
+    </div>
+</div>
+
+<main class="glossary-page">
+<section class="glossary-hero">
+<div>
+<div class="glossary-badge-wrap">
+<div class="glossary-badge-circle">
+<span class="badge-title">Glossary</span>
+</div>
+</div>
+<p class="badge-tagline">For terms and hypes lover :</p>
+</div>
+<div class="glossary-intro">
+<p class="glossary-intro-title">
+<strong>What is this page:</strong>
+<span> it is about all the concept, frameworks, concepts, categories, types......etc. the industry have, this needed for 3 main uses:</span>
+</p>
+<ol>
+<li>Unified understanding for all workers (huamn and agents): its like any proffesional entity (add glossary to their website</li>
+<li>Helping to solve the semantics and terms challenge in the industry</li>
+<li>backlinks and AEO/GEO/SEO Visibility, Below are some examples, based on what i collected, there will be more than 350, Every one of them will have :
+<ul><li>2–3 lines definition, All of them have Tags, the structure and architecture if needed, in special cases, it will have also the relations with other concepts</li></ul>
+</li>
+</ol>
+</div>
+</section>
+<section class="glossary-filters">
+<div>
+<div class="filter-by-label">Filter by:</div>
+<div style="margin-top:28px">
+<div class="filter-tag-label">Tag</div>
+<div style="margin-top:40px"><div class="filter-alpha-label">Alphabetical</div></div>
+</div>
+</div>
+<div>
+<div class="filter-tag-pills">
+<button class="tag-pill tp-ai active" onclick="filterTag('ai',this)">Ai</button>
+<button class="tag-pill tp-agents" onclick="filterTag('agents',this)">Agents</button>
+<button class="tag-pill tp-marketing" onclick="filterTag('marketing',this)">Marketing</button>
+<button class="tag-pill tp-revenue" onclick="filterTag('revenue',this)">Revenue</button>
+<button class="tag-pill tp-growth" onclick="filterTag('growth',this)">Growth</button>
+<button class="tag-pill tp-campaign" onclick="filterTag('campaign',this)">Campaign</button>
+<button class="tag-pill tp-2026" onclick="filterTag('2026',this)">2026</button>
+</div>
+<div class="alpha-strip" id="alphaStrip"></div>
+</div>
+</section>
+<div class="glossary-search-bar">
+<input type="text" class="glossary-search-input" placeholder="Search terms..." id="searchInput" oninput="filterSearch()"/>
+<span class="glossary-count" id="termCount"></span>
+</div>
+<section class="glossary-body" id="termsGrid"></section>
+<section class="glossary-detail-section">
+<div class="glossary-detail-main">
+<h2 class="glossary-detail-term-title">the "X-Shaped" Marketer</h2>
+<p class="glossary-detail-lead">is defined as an Integrator and Connective Leader rather than just a subject matter expert. While previous models (like T-shaped) focused on balancing specialized skills with general knowledge, the X-Shaped profile has emerged in response to an AI-saturated landscape. In a world where AI can generate specialized outputs (code, copy, data analysis) instantly, the human value has shifted from "doing the work" to "connecting the domains."</p>
+<div class="glossary-detail-block">
+<h3 class="glossary-detail-block-title">1. Definition &amp; Scope of the X-Shaped Marketer</h3>
+<p><strong style="color:rgba(255,255,255,0.9)">Definition:</strong> An X-shaped marketer is a cross-functional orchestrator who bridges the gaps between siloed departments—typically connecting Strategy, Creativity, Technology, and Data. The "X" represents the convergence of these diverse disciplines into a central point of leadership and synthesis.</p>
+<br>
+<p class="glossary-detail-block-subtitle">Scope &amp; Core Focus:</p>
+<p><strong style="color:rgba(255,255,255,0.85)">Synthesis over Specialization:</strong> Unlike specialists who dig deep into one channel (e.g., SEO), X-shaped marketers focus on how that channel impacts product development, sales velocity, and customer psychology simultaneously.</p>
+<p><strong style="color:rgba(255,255,255,0.85)">Translation:</strong> They act as translators between technical teams (data science, engineering) and creative teams (brand, content), ensuring that algorithmic insights fuel human-centric storytelling.</p>
+<p><strong style="color:rgba(255,255,255,0.85)">Systems Thinking:</strong> Their scope is the entire business ecosystem. They do not just optimize a campaign; they optimize the feedback loop between product usage data and marketing messaging.</p>
+<p><strong style="color:rgba(255,255,255,0.85)">AI Orchestration:</strong> They are expected to manage AI agents or workflows, judging the quality of output across different domains rather than generating it manually.</p>
+</div>
+<div class="glossary-detail-block">
+<h3 class="glossary-detail-block-title">2. Differences with Other Marketer Profiles</h3>
+<p>The primary difference is that X-shaped marketers are valued for leadership and connection, whereas other profiles are valued for execution and knowledge depth.</p>
+<div class="glossary-detail-table-wrap">
+<table class="glossary-detail-table">
+<thead>
+<tr><th>Profile Type</th><th>Shape Visualization</th><th>Primary Focus</th><th>Key Characteristic</th></tr>
+</thead>
+<tbody>
+<tr><td>X-Shaped</td><td>X (Convergence)</td><td>Integration &amp; Leadership</td><td>Connects disparate teams (e.g., Product + Sales + Marketing). Valued for synthesis and strategic judgment.</td></tr>
+<tr><td>T-Shaped</td><td>T (Broad top, deep stem)</td><td>Balanced Competence</td><td>Broad general knowledge (the top bar) with deep expertise in one specific area (the vertical stem). The standard for senior contributors.</td></tr>
+<tr><td>Pi-Shaped</td><td>&#960; (Two deep legs)</td><td>Dual Expertise</td><td>Broad general knowledge with deep expertise in two distinct areas (e.g., Data Analytics + Creative Writing). "Hybrid" marketers.</td></tr>
+<tr><td>I-Shaped</td><td>I (Deep vertical line)</td><td>Deep Specialization</td><td>Extreme depth in a single domain (e.g., a Technical SEO specialist) with little focus on other areas. Often siloed.</td></tr>
+<tr><td>V-Shaped</td><td>V (Tapered depth)</td><td>Technical Adeptness</td><td>A variation of T-shaped, but with "sloping" depth in adjacent fields, making them more technically versatile than a standard generalist.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="glossary-detail-sidebar">
+<div>
+<h3 class="sidebar-section-title latest">Latest</h3>
+<ul class="sidebar-link-list">
+<li><a href="#">Revenue OS</a></li>
+<li><a href="#">Agentification VS agentic</a></li>
+<li><a href="#">Empathy intelligence</a></li>
+<li><a href="#">Semiotics in the Age of AI</a></li>
+<li><a href="#">Real-time Neuro-Adaptive Advertising</a></li>
+<li><a href="#">Algorithmic Decoding of narratives</a></li>
+<li><a href="#">Neuro-Symbolic AI Adoption</a></li>
+<li><a href="#">Re-evaluating Meaning</a></li>
+<li><a href="#">Symbolic Personalization</a></li>
+<li><a href="#">Proactive, subconscious consumer</a></li>
+<li><a href="#">Understanding and real-time behavioral influence</a></li>
+</ul>
+</div>
+<div>
+<h3 class="sidebar-section-title related">Related</h3>
+<ul class="sidebar-link-list">
+<li><a href="#">Modernized Marketing</a></li>
+<li><a href="#">Marketing 7.0 Intelligence</a></li>
+<li><a href="#">MarOps</a></li>
+<li><a href="#">AgeOps</a></li>
+<li><a href="#">Gen Content</a></li>
+<li><a href="#">Campaigns Orchestrator</a></li>
+<li><a href="#">Brand Governor</a></li>
+<li><a href="#">Market Scouting</a></li>
+<li><a href="#">Scenario Simulation &amp; Wargaming</a></li>
+<li><a href="#">Cross-Modal</a></li>
+<li><a href="#">The science of attention</a></li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+<div class="creative-footer-reveal-container" id="site-footer">
+<footer class="creative-tech-footer">
+<div class="footer-top-glow-line"></div>
+<div class="footer-grid-inner">
+<div class="footer-brand-column">
+<img src="media/REVacity.png" alt="Revacity" style="width:180px;height:auto"/>
+<p class="footer-brand-tagline">Observability platforms and autonomous orchestration frameworks for high-fidelity agentic systems.</p>
+</div>
+<div class="footer-links-grid">
+    <div class="footer-link-group">
+        <h4 class="group-title">STRUCTURE</h4>
+        <a href="index.html" class="footer-link-item"><span class="link-num">01 //</span> The Collapse</a>
+        <a href="about.html" class="footer-link-item"><span class="link-num">02 //</span> About Us</a>
+        <a href="our-architecture.html" class="footer-link-item"><span class="link-num">03 //</span> Our Architecture</a>
+    </div>
+
+    <div class="footer-link-group">
+        <h4 class="group-title">STRUCTURE</h4>
+        <a href="before-judging-us.html" class="footer-link-item"><span class="link-num">04 //</span> Before Judging</a>
+        <a href="compare.html" class="footer-link-item"><span class="link-num">05 //</span> Compare</a>
+        <a href="blog.html" class="footer-link-item"><span class="link-num">06 //</span>Blog</a>
+    </div>
+</div>
+<div class="footer-actions-column">
+<h4 class="group-title">SYSTEM INTERACTION</h4>
+<div class="footer-subscribe-wrapper">
+<input type="email" placeholder="Enter operator email..." class="footer-input-field"/>
+<button type="button" class="footer-submit-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+</div>
+
+  <div class="footer-meta-stamps">
+                     <div class="footer-socials-row">
+                    <a href="#" class="social-icon-btn" aria-label="LinkedIn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="X (Twitter)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Facebook">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Instagram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+                </div>
+
+</div>
+</div>
+<div class="footer-bottom-bar">
+    <p class="copyright-text">&copy; 2026 REVACITY . ALL PROTOCOLS RESERVED.</p>
+    <div class="footer-legal-links">
+        <a href="privacy.html">PRIVACY DECREE</a>
+        <span class="divider">/</span>
+        <a href="terms.html">TERMINAL TERMS</a>
+        <span class="divider">/</span>
+        <a href="security-clearance.html">SECURITY CLEARANCE</a>
+    </div>
+</div>
+</footer>
+</div>
+<script>
+(function(){
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobile-menu');
+const closeBtn=document.getElementById('close-menu');
+if(!hamburger)return;
+hamburger.addEventListener('click',()=>{hamburger.classList.add('active');mobileMenu.classList.add('active');});
+closeBtn.addEventListener('click',()=>{hamburger.classList.remove('active');mobileMenu.classList.remove('active');});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hamburger.classList.remove('active');mobileMenu.classList.remove('active');}));
+})();
+'ABCDEFGHIJKLMNOP'.split('').forEach(l=>{
+const b=document.createElement('button');
+b.className='alpha-btn';b.textContent=l;
+b.onclick=()=>filterAlpha(l,b);
+document.getElementById('alphaStrip').appendChild(b);
+});
+const TERMS=[
+{n:1,t:'Agentic intelligence',tags:['ai','agents'],col:1},
+{n:2,t:'Decision Intelligence (ID)',tags:['ai'],col:1},
+{n:3,t:'Revenue Intelligence (IR)',tags:['ai','revenue'],col:1},
+{n:4,t:'Contextual intelligence (CI)',tags:['ai'],col:1},
+{n:5,t:'Unified Intelligence',tags:['ai'],col:1},
+{n:6,t:'Predictive & Prescriptive intelligence',tags:['ai'],col:1},
+{n:7,t:'Integrated Actionability',tags:['ai'],col:1},
+{n:8,t:'Verticalization',tags:['ai'],col:1},
+{n:9,t:'Brand Ai Modeling',tags:['ai','marketing'],col:1},
+{n:10,t:'(AEO+GEO)',tags:['marketing','2026'],col:1},
+{n:11,t:'Generative Personalizarion',tags:['ai','marketing'],col:1},
+{n:12,t:'Next-Gen Customer Experience',tags:['marketing'],col:1},
+{n:13,t:'Creative engineering',tags:['marketing'],col:1},
+{n:14,t:'Generative Content & Creative',tags:['ai','marketing'],col:1},
+{n:15,t:'Adaptive Experience Engineering (AXE)',tags:['ai'],col:1},
+{n:16,t:'"Live Software" (Liquid Applications.)',tags:['ai','2026'],col:1},
+{n:17,t:'Campaign orchestration',tags:['campaign'],col:1},
+{n:18,t:'Autonomous Campaign Optimization',tags:['campaign','agents'],col:1},
+{n:19,t:'Dynamic Campaign Management',tags:['campaign'],col:1},
+{n:20,t:'Omnichannel Orchestration',tags:['marketing'],col:1},
+{n:21,t:'Real-time Data Integration',tags:['ai'],col:1},
+{n:22,t:'Dynamic Campaign Management',tags:['campaign'],col:1},
+{n:23,t:'CAC/ROAS/CVR/LTV',tags:['revenue','marketing'],col:1},
+{n:24,t:'Channel efficiency, Channel + event instrumentation',tags:['marketing'],col:1},
+{n:25,t:'Marketing engineering',tags:['marketing'],col:1},
+{n:26,t:'Marketing-Sales Alignment',tags:['marketing','revenue'],col:1},
+{n:27,t:'Vibe Marketing',tags:['marketing','2026'],col:1},
+{n:28,t:'Commercial levers',tags:['revenue'],col:1},
+{n:29,t:'NeoMarketing',tags:['marketing','2026'],col:1},
+{n:30,t:'Signal-Based Marketing',tags:['marketing'],col:1},
+{n:31,t:'Intent Data',tags:['marketing'],col:1},
+{n:32,t:'Revenue Architecture',tags:['revenue'],col:1},
+{n:33,t:'Predictive Revenue Modeling',tags:['revenue','ai'],col:1},
+{n:34,t:'Growth Loops',tags:['growth'],col:1},
+{n:35,t:'Compound Growth Strategy',tags:['growth'],col:1},
+{n:36,t:'Product-Led Growth (PLG)',tags:['growth'],col:1},
+{n:37,t:'Demand Generation Engine',tags:['marketing','revenue'],col:1},
+{n:38,t:'Attribution Modeling',tags:['marketing'],col:1},
+{n:39,t:'Revenue Ops (RevOps)',tags:['revenue'],col:1},
+{n:40,t:'Conversion Rate Optimization',tags:['marketing','revenue'],col:1},
+{n:41,t:'Agentic Commerce',tags:['agents','2026'],col:2},
+{n:42,t:'Conversational',tags:['ai','agents'],col:2},
+{n:43,t:'Cognitive-Contextual',tags:['ai'],col:2},
+{n:44,t:'Predictive & Prescriptive',tags:['ai'],col:2},
+{n:45,t:'Iterative & Recursive',tags:['ai'],col:2},
+{n:46,t:'Agentic Revenue',tags:['agents','revenue'],col:2},
+{n:47,t:'& Output Driven',tags:['ai'],col:2},
+{n:48,t:'Agentic Ai',tags:['ai','agents'],col:2},
+{n:49,t:'Explainable Ai',tags:['ai'],col:2},
+{n:50,t:'Asynchronous Ai',tags:['ai'],col:2},
+{n:51,t:'Conversational Ai',tags:['ai'],col:2},
+{n:52,t:'Neural-Symbolic Ai',tags:['ai'],col:2},
+{n:53,t:'Agnostic & Hybrid Ai',tags:['ai'],col:2},
+{n:54,t:'Stateful & Situational Ai',tags:['ai'],col:2},
+{n:55,t:'Domain Expert/Specific',tags:['ai'],col:2},
+{n:56,t:'Functional/Vertical',tags:['ai'],col:2},
+{n:57,t:'System & Revenue',tags:['revenue'],col:2},
+{n:58,t:'Librarian & Ledger',tags:['ai'],col:2},
+{n:59,t:'Marketing and engineering Agents',tags:['agents','marketing'],col:2},
+{n:60,t:'Cognitive',tags:['ai'],col:2},
+{n:61,t:'Contextual Graph',tags:['ai'],col:2},
+{n:62,t:'Orchestration/ Pattern',tags:['agents'],col:2},
+{n:63,t:'Semantic Ontology',tags:['ai'],col:2},
+{n:64,t:'Canonical Layer',tags:['ai'],col:2},
+{n:65,t:'Decision Intelligence (ID)',tags:['ai'],col:2},
+{n:66,t:'Net New Revenue (NNR).',tags:['revenue'],col:2},
+{n:67,t:'Growth Engineering',tags:['growth'],col:2},
+{n:68,t:'Unified Intelligence',tags:['ai'],col:2},
+{n:69,t:'Verticalization',tags:['ai'],col:2},
+{n:70,t:'Agile Revenue Framework',tags:['revenue'],col:2},
+{n:71,t:'Cognitive Automation',tags:['ai','agents'],col:2},
+{n:72,t:'Behavioral Intelligence',tags:['ai'],col:2},
+{n:73,t:'Market Signal Intelligence',tags:['ai','marketing'],col:2},
+{n:74,t:'Revenue Signal Layer',tags:['revenue'],col:2},
+{n:75,t:'Autonomous Decision Layer',tags:['agents','ai'],col:2},
+{n:76,t:'Narrative Intelligence',tags:['ai','marketing'],col:2},
+{n:77,t:'Audience Intelligence',tags:['marketing','ai'],col:2},
+{n:78,t:'Predictive Segmentation',tags:['marketing','ai'],col:2},
+{n:79,t:'Content Intelligence',tags:['marketing','ai'],col:2},
+{n:80,t:'Growth Intelligence',tags:['growth','ai'],col:2},
+{n:81,t:'Chain-of-Thought (CoT)',tags:['ai'],col:3},
+{n:82,t:'ReAct (Reason + Act)',tags:['ai','agents'],col:3},
+{n:83,t:'Sales Funnel',tags:['revenue','marketing'],col:3},
+{n:84,t:'Psychometric assessment',tags:['marketing'],col:3},
+{n:85,t:'Guardrails',tags:['ai'],col:3},
+{n:86,t:"Eval's",tags:['ai'],col:3},
+{n:87,t:'Constraints',tags:['ai'],col:3},
+{n:88,t:'Architectural Liberation',tags:['ai','2026'],col:3},
+{n:89,t:'Causal Lift',tags:['ai','marketing'],col:3},
+{n:90,t:'Context Marketing',tags:['marketing'],col:3},
+{n:91,t:'Brand Integrity',tags:['marketing'],col:3},
+{n:92,t:'Brand health',tags:['marketing'],col:3},
+{n:93,t:'Memory-Augmented Systems',tags:['ai','agents'],col:3},
+{n:94,t:'Hyper-Personalization 2.0',tags:['marketing','2026'],col:3},
+{n:95,t:'Bounded Autonomy',tags:['agents','ai'],col:3},
+{n:96,t:'Governance-by-Design',tags:['ai'],col:3},
+{n:97,t:'Orchestration layer',tags:['agents'],col:3},
+{n:98,t:'Marketing to Machines (IDIRA)',tags:['marketing','agents','2026'],col:3},
+{n:99,t:'No-Code/Low-Code',tags:['ai'],col:3},
+{n:100,t:'Real-Time Optimization',tags:['marketing','ai'],col:3},
+{n:101,t:'Signal, Intent infer',tags:['marketing','ai'],col:3},
+{n:102,t:'Cognitive-Engineering,',tags:['ai'],col:3},
+{n:103,t:'Harness Engineering',tags:['ai'],col:3},
+{n:104,t:'Context Engineering',tags:['ai'],col:3},
+{n:105,t:'Prompt Engineering',tags:['ai'],col:3},
+{n:106,t:'Meta-engineering',tags:['ai'],col:3},
+{n:107,t:'Novel and Native engineering Vsor & Predefined or Legacy',tags:['ai','2026'],col:3},
+{n:108,t:'Metaphor in ecosystems,',tags:['ai'],col:3},
+{n:109,t:'Legacy Vs Generative Workflows and Frameworks,',tags:['ai','2026'],col:3},
+{n:110,t:'Outputs Vs Outcome engineering',tags:['ai'],col:3},
+{n:111,t:'Ambient Intelligence',tags:['ai','2026'],col:3},
+{n:112,t:'Swarm Intelligence',tags:['ai','agents'],col:3},
+{n:113,t:'Digital Twin',tags:['ai'],col:3},
+{n:114,t:'Embodied AI',tags:['ai'],col:3},
+{n:115,t:'Zero-Shot Learning',tags:['ai'],col:3},
+{n:116,t:'Few-Shot Prompting',tags:['ai'],col:3},
+{n:117,t:'Retrieval-Augmented Generation (RAG)',tags:['ai'],col:3},
+{n:118,t:'Fine-Tuning',tags:['ai'],col:3},
+{n:119,t:'Foundation Models',tags:['ai'],col:3},
+{n:120,t:'Synthetic Data',tags:['ai'],col:3},
+{n:121,t:'Drifting tolerance/endurance.',tags:['ai'],col:4},
+{n:122,t:'Workforce VS Taskforce',tags:['agents'],col:4},
+{n:123,t:'Revenue engineering As A Service (REaaS)',tags:['revenue','2026'],col:4,rev:true},
+{n:124,t:'Growth engineering As A Service (GEaaS)',tags:['growth','2026'],col:4,rev:true},
+{n:125,t:'Demand Generation As A Service',tags:['marketing','revenue'],col:4,rev:true},
+{n:126,t:'Marketing modernization As A Service',tags:['marketing'],col:4,rev:true},
+{n:127,t:'Decision Intelligence, Revenue Intelligence, Growth Intelligence, Engine',tags:['ai','revenue','growth'],col:4,rev:true},
+{n:128,t:'Human-First AI',tags:['ai'],col:4},
+{n:129,t:'Workflow Engineering',tags:['agents'],col:4},
+{n:130,t:'Ai marketing, Marketing engineering',tags:['ai','marketing'],col:4},
+{n:131,t:'Go-to-market, GTM',tags:['marketing','revenue'],col:4},
+{n:132,t:'Marketing modernization',tags:['marketing'],col:4},
+{n:133,t:'Value metric and Value Boosting',tags:['revenue','growth'],col:4,rev:true},
+{n:134,t:'Persona , AI-native marketing stack',tags:['marketing','ai'],col:4},
+{n:135,t:'Product-Market Fit analysis',tags:['growth','revenue'],col:4},
+{n:136,t:'Operational Agility, Pivot Strategies, decentralized collaboration',tags:['agents'],col:4},
+{n:137,t:'Innovative, Novel, Native',tags:['2026'],col:4},
+{n:138,t:'Intelligent Context and Cognitive Decision Mesh',tags:['ai'],col:4},
+{n:139,t:'Problem-Signal',tags:['ai','marketing'],col:4},
+{n:140,t:'Reactive Precision',tags:['ai'],col:4},
+{n:141,t:'Zero Legacy',tags:['2026'],col:4},
+{n:142,t:'Zero Data',tags:['ai'],col:4},
+{n:143,t:'Zero Shot',tags:['ai'],col:4},
+{n:144,t:'Frictional marketing',tags:['marketing'],col:4},
+{n:145,t:'Buyer Personas',tags:['marketing'],col:4},
+{n:146,t:'Fractional marketing',tags:['marketing'],col:4},
+{n:147,t:'Content engineering',tags:['marketing','ai'],col:4},
+{n:148,t:'AI Consensus Ecosystem',tags:['ai','agents'],col:4},
+{n:149,t:'SOPs',tags:['agents'],col:4},
+];
+let activeTag='all',activeAlpha='',searchQuery='';
+function getFiltered(){return TERMS.filter(t=>{const tagOk=activeTag==='all'||t.tags.includes(activeTag);const alphaOk=!activeAlpha||t.t.toUpperCase().startsWith(activeAlpha);const searchOk=!searchQuery||t.t.toLowerCase().includes(searchQuery);return tagOk&&alphaOk&&searchOk;});}
+function render(){const filtered=getFiltered();document.getElementById('termCount').textContent=filtered.length+' terms';const cols={1:[],2:[],3:[],4:[]};filtered.forEach(t=>cols[t.col].push(t));document.getElementById('termsGrid').innerHTML=[1,2,3,4].map(c=>`<div class="glossary-col">${cols[c].map(t=>`<div class="term-item${t.col===2||t.rev?' col2':''}">${t.n}.${t.t}</div>`).join('')}</div>`).join('');}
+function filterTag(tag,btn){activeTag=activeTag===tag?'all':tag;document.querySelectorAll('.tag-pill').forEach(b=>b.classList.remove('active'));if(activeTag!=='all')btn.classList.add('active');render();}
+function filterAlpha(letter,btn){activeAlpha=activeAlpha===letter?'':letter;document.querySelectorAll('.alpha-btn').forEach(b=>b.classList.remove('active'));if(activeAlpha)btn.classList.add('active');render();}
+function filterSearch(){searchQuery=document.getElementById('searchInput').value.toLowerCase().trim();render();}
+render();
+</script>
+
+<!-- GSAP + ScrollTrigger CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof gsap === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* Header entrance */
+  gsap.set('.main-header', { y: -80, autoAlpha: 0 });
+  gsap.to('.main-header', { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', delay: 0.1 });
+
+  /* Footer reveal */
+  gsap.from('#site-footer', {
+    y: 80, opacity: 0, duration: 1.2, ease: 'power3.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 92%' }
+  });
+  gsap.from('.footer-brand-column', {
+    x: -40, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 88%' }
+  });
+  gsap.from('.footer-link-group', {
+    y: 30, opacity: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 85%' }
+  });
+  gsap.from('.footer-actions-column', {
+    x: 40, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 88%' }
+  });
+  gsap.from('.footer-bottom-bar', {
+    y: 20, opacity: 0, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '.footer-bottom-bar', start: 'top 98%' }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>REVacity | The Agent</title>
+<link rel="icon" type="image/png" href="media/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── The Agent — page-specific overrides ── */
+html{height:100%;overflow:hidden}
+html,body{width:100%;background:#000;font-family:"Google Sans Code",monospace;overflow-x:hidden}
+body{height:100%;overflow-y:auto}
+
+/* push the video section down so it clears the fixed header */
+:root{--header-h:80px}
+body.page-agent .main-agent-section{margin-top:var(--header-h)}
+
+/* .form-group conflicts with style.css (different layout) — scoped */
+body.page-agent .form-group{display:flex;flex-direction:column;gap:10px}
+body.page-agent .form-group label{font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:#666;font-weight:600}
+body.page-agent .form-group input{background:transparent;border:1px solid #1f1f2e;padding:clamp(14px,2vh,18px) 20px;color:#fff;font-family:"Google Sans Code",monospace;font-size:0.95rem;outline:none;transition:border-color 0.3s;width:100%;border-radius:0}
+body.page-agent .form-group input::placeholder{color:#444}
+body.page-agent .form-group input:focus{border-color:#a855f7}
+
+/* ── Chat pills layout ── */
+/* Desktop: pills stay inside the wrapper (default) */
+.chat-pills--mobile{display:none}
+.chat-pills--desktop{display:flex}
+
+/* Mobile: hide pills inside wrapper, show them below as a sibling */
+@media(max-width:768px){
+  .chat-pills--desktop{display:none}
+  .chat-pills--mobile{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:flex-start;
+    padding:10px 16px 0;
+    width:100%;
+    box-sizing:border-box;
+    opacity:0; /* matched to GSAP initial state */
+  }
+  .need-help-container{
+    margin-top: 25px !important;
+    padding-left: 10px;
+  }
+  .chat-bar-wrapper{
+    margin: 0px auto 20px;
+  }
+}
+</style>
+</head>
+<body class="page-agent">
+
+ <header class="main-header">
+    <div class="logo"><a href="index.html"><img src="media/logo-new.png" alt="Revacity" fetchpriority="high" /></a></div>
+
+    <nav class="nav-center">
+        <a href="index.html" data-text="The Collapse">The Collapse</a>
+        <a href="about.html" data-text="About Us">About Us</a>
+        <a href="before-judging-us.html" data-text="Before Judging">Before Judging</a>
+        <a href="compare.html" data-text="Compare">Compare</a>
+        <a href="blog.html" data-text="Blog">Blog</a>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 20px;">
+
+        <div class="header-buttons">
+            <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant">
+                <span>Start a Warrant</span>
+            </a>
+            <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward">
+                <span>$100k Reward</span>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
+<div class="mobile-slide-menu" id="mobile-menu">
+    <div class="close-menu" id="close-menu">
+        <span></span>
+        <span></span>
+    </div>
+
+    <a href="index.html" class="menu-item" style="--i: 1;">The Collapse</a>
+    <a href="about.html" class="menu-item" style="--i: 2;">About Us</a>
+    <a href="before-judging-us.html" class="menu-item" style="--i: 3;">Before Judging</a>
+    <a href="compare.html" class="menu-item" style="--i: 4;">Compare</a>
+    <a href="blog.html" class="menu-item" style="--i: 5;">Blog</a>
+
+    <div class="mobile-menu-cta" style="--i: 6;">
+        <a href="start-a-warrent.html" class="btn-warrant" data-value="Start a Warrant"><span>Start a Warrant</span></a>
+        <a href="100K-Challenge.html" class="btn-reward" data-value="$100k Reward"><span>$100k Reward</span></a>
+    </div>
+</div>
+
+<div id="new-agent-section" class="main-agent-section">
+    <video id="agent-video" autoplay loop muted playsinline preload="auto" class="bg-video">
+        <source src="media/Media1.mp4" type="video/mp4">
+    </video>
+    <span class="agent-label" id="agent-label">The Agent</span>
+    <h2 class="agent-selection-title" id="agent-selection-title">Select your pain or wished gain</h2>
+    <div class="scatter-canvas" id="scatter-canvas"></div>
+    <div class="mobile-list" id="mobile-list"></div>
+    <div class="chat-bar-wrapper" id="chat-bar-wrapper">
+        <div class="chat-bar">
+            <input type="text" placeholder="Describe your revenue reality..." id="chat-input"/>
+            <button class="chat-send-btn" title="Send">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </div>
+        <div class="chat-pills chat-pills--desktop">
+            <span class="pill">WE SELL RETAIL PRODUCTS ONLINE</span>
+            <span class="pill">WE'RE A D2C BRAND</span>
+            <span class="pill">ECOMMERCE APPAREL</span>
+            <span class="pill">CONSUMER ELECTRONICS</span>
+        </div>
+    </div>
+    <div class="chat-pills chat-pills--mobile" id="chat-pills-mobile">
+        <span class="pill">WE SELL RETAIL PRODUCTS ONLINE</span>
+        <span class="pill">WE'RE A D2C BRAND</span>
+        <span class="pill">ECOMMERCE APPAREL</span>
+        <span class="pill">CONSUMER ELECTRONICS</span>
+    </div>
+    <div class="need-help-container">
+        <div class="need-help-link">
+            <span class="need-help-icon">?</span>
+            Need Help
+        </div>
+    </div>
+</div>
+
+<div class="agent-form-container" id="agent-form-container">
+    <div class="agent-form-inner">
+        <button class="form-close-btn" id="form-close-btn" aria-label="Close form">&times;</button>
+        <button class="form-back-btn" id="form-back-btn">← Back to Agent</button>
+        <h3 class="form-heading">We are on it, Fill the below details and you will hear from us in the next 48-72 hours</h3>
+        <form onsubmit="event.preventDefault(); alert('Form submitted!');">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" placeholder="Your name" required />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="you@company.com" required />
+                </div>
+                <div class="form-group">
+                    <label>Company</label>
+                    <input type="text" placeholder="Company name" required />
+                </div>
+                <div class="form-group submit-wrap">
+                    <button type="submit" class="form-submit-btn">SUBMIT</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="creative-footer-reveal-container" id="site-footer">
+  <footer class="creative-tech-footer">
+    <div class="footer-top-glow-line"></div>
+    <div class="footer-grid-inner">
+      <div class="footer-brand-column">
+        <img src="media/REVacity.png" alt="REVacity" style="width:180px;height:auto"/>
+        <p class="footer-brand-tagline">Observability platforms and autonomous orchestration frameworks for high-fidelity agentic systems.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-link-group">
+            <h4 class="group-title">STRUCTURE</h4>
+            <a href="index.html" class="footer-link-item"><span class="link-num">01 //</span> The Collapse</a>
+            <a href="about.html" class="footer-link-item"><span class="link-num">02 //</span> About Us</a>
+            <a href="our-architecture.html" class="footer-link-item"><span class="link-num">03 //</span> Our Architecture</a>
+        </div>
+
+        <div class="footer-link-group">
+            <h4 class="group-title">STRUCTURE</h4>
+            <a href="before-judging-us.html" class="footer-link-item"><span class="link-num">04 //</span> Before Judging</a>
+            <a href="compare.html" class="footer-link-item"><span class="link-num">05 //</span> Compare</a>
+            <a href="blog.html" class="footer-link-item"><span class="link-num">06 //</span>Blog</a>
+        </div>
+      </div>
+      <div class="footer-actions-column">
+        <h4 class="group-title">SYSTEM INTERACTION</h4>
+        <div class="footer-subscribe-wrapper">
+          <input type="email" placeholder="Enter operator email..." class="footer-input-field"/>
+          <button type="button" class="footer-submit-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+          <div class="footer-meta-stamps">
+                     <div class="footer-socials-row">
+                    <a href="#" class="social-icon-btn" aria-label="LinkedIn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="X (Twitter)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Facebook">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon-btn" aria-label="Instagram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+                </div>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+        <p class="copyright-text">&copy; 2026 REVACITY . ALL PROTOCOLS RESERVED.</p>
+        <div class="footer-legal-links">
+            <a href="privacy.html">PRIVACY DECREE</a>
+            <span class="divider">/</span>
+            <a href="terms.html">TERMINAL TERMS</a>
+            <span class="divider">/</span>
+            <a href="security-clearance.html">SECURITY CLEARANCE</a>
+        </div>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  const hamburger=document.getElementById('hamburger');
+  const mobileMenu=document.getElementById('mobile-menu');
+  const closeMenuBtn=document.getElementById('close-menu');
+  if(!hamburger||!mobileMenu||!closeMenuBtn)return;
+  hamburger.addEventListener('click',()=>{hamburger.classList.add('active');mobileMenu.classList.add('active')});
+  const closeMenu=()=>{hamburger.classList.remove('active');mobileMenu.classList.remove('active')};
+  closeMenuBtn.addEventListener('click',closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
+})();
+
+/* ── Option texts ── */
+const OPTIONS = [
+    { text: "Are you here because you are looking for someone do your work, or Generate for both of you more money?", cls: "w" },
+    { text: '"I can code a solution for your revenue problem in real-time right now. No devs needed. Just tell me the goal."', cls: "w" },
+    { text: "If i gave you 3 different customer profiles you know whose your right customer and whose not?", cls: "m" },
+    { text: "You are here because something is broken. Is it the traffic, the conversion, or the product? Be honest, I'm not a human.", cls: "w" },
+    { text: "Do you know why you have ROI Blindness?", cls: "m" },
+    { text: "If I could cut your acquisition cost by 20% but you had to fire your favorite agency, would you do it?", cls: "w" },
+    { text: "Do have the nerve and Audacity to do Now Situational Audit?", cls: "m" },
+    { text: '"If I could rewrite your homepage in 3 minutes to double conversion, would you let me? Or do you prefer the human touch?"', cls: "w" },
+    { text: "How effecient the huge likes and clicks you are getting?", cls: "m" },
+    { text: "Are you in Satisfaction or Stagnation or Surrendering Or Survival?", cls: "m" },
+    { text: "What you call it Business espionage or competitve intelligence?", cls: "w" },
+    { text: '"Let\'s play a game. You tell me your revenue goal, and I\'ll generate the roadmap to hit it. No charge for the map."', cls: "w" },
+    { text: "How well you know your work, seriously what is your value metrics", cls: "m" },
+    { text: 'The "Why" Challenge: You are satisfied because you compare yourself to your past. What if you compared yourself to your potential?', cls: "w" },
+    { text: "You need to know whose not buying from you?", cls: "m" },
+    { text: 'Currently you are "shouting" or "hosting"? Can you define Attention Arbitrage', cls: "m" },
+    { text: "What make's you happy about your brand and products performance, Ability to pay the bills, or Pure ignorance", cls: "w" },
+];
+const POSITIONS = [
+    [35,   2,  490],[68,   2,  490],[20,  11,  490],[52,  10,  490],[78,  12,  490],
+    [27,  21,  490],[70,  20,  490],[46,  30,  490],[74,  28,  490],[16,  32,  490],
+    [80,  38,  490],[54,  42,  490],[76,  52,  490],[20,  42,  490],[77,  60,  490],
+    [18,  57,  490],[48,  55,  490],
+];
+function buildScatter() {
+    const canvas = document.getElementById('scatter-canvas');
+    const mobileList = document.getElementById('mobile-list');
+    let maxTopVh = 0;
+    OPTIONS.forEach((opt, i) => {
+        const [cx, topVh, maxW] = POSITIONS[i] || [50, i * 8, 300];
+        const div = document.createElement('div');
+        div.className = `agent-text-block ${opt.cls}`;
+        div.textContent = opt.text;
+        div.style.left = cx + '%';
+        div.style.top = topVh + 'vh';
+        div.style.maxWidth = maxW + 'px';
+        div.style.textAlign = 'center';
+        div.style.transform = 'translateX(-50%) scale(0)';
+        canvas.appendChild(div);
+        const divM = document.createElement('div');
+        divM.className = `agent-text-block ${opt.cls}`;
+        divM.textContent = opt.text;
+        mobileList.appendChild(divM);
+        if (topVh > maxTopVh) maxTopVh = topVh;
+    });
+    canvas.style.height = (maxTopVh + 5) + 'vh';
+}
+function animatePop(elements) {
+    const order = elements.map((_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+    }
+    order.forEach((idx, seq) => {
+        const el = elements[idx];
+        gsap.to(el, {
+            opacity: 1, scale: 1, duration: 0.38, delay: 0.9 + seq * 0.11,
+            ease: "back.out(2.4)", transformOrigin: "50% 50%",
+            onStart() { this.targets()[0].style.transform = 'translateX(-50%) scale(0)'; },
+            onUpdate() { el.style.transform = `translateX(-50%) scale(${gsap.getProperty(el,"scale")})`; },
+            onComplete() { el.style.transform = 'translateX(-50%) scale(1)'; }
+        });
+    });
+}
+function setupFormTransitions() {
+    const allQuestionBlocks = document.querySelectorAll('.agent-text-block');
+    const formContainer = document.getElementById('agent-form-container');
+    const backBtn = document.getElementById('form-back-btn');
+    const closeBtn = document.getElementById('form-close-btn');
+    const mainUiElements = ['#agent-label','#agent-selection-title','#scatter-canvas','#mobile-list','#chat-bar-wrapper','#chat-pills-mobile','.need-help-container'];
+    allQuestionBlocks.forEach(block => {
+        block.addEventListener('click', () => {
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+            gsap.to(mainUiElements, { opacity: 0, y: -20, duration: 0.4, stagger: 0.03, pointerEvents: 'none' });
+            formContainer.style.pointerEvents = 'auto';
+            gsap.fromTo(formContainer, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.18, ease: 'power2.out' });
+        });
+    });
+    [backBtn, closeBtn].forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', () => {
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+                gsap.to(formContainer, { opacity: 0, y: 25, duration: 0.4, pointerEvents: 'none' });
+                gsap.to(mainUiElements, { opacity: 1, y: 0, duration: 0.5, stagger: 0.03, pointerEvents: 'auto' });
+            });
+        }
+    });
+}
+const vid = document.getElementById('agent-video');
+if (vid) { vid.muted = true; vid.play().catch(() => {}); }
+window.addEventListener('load', () => {
+    gsap.fromTo('#new-agent-section', { filter: 'brightness(2.5) blur(6px)' }, { filter: 'brightness(1) blur(0px)', duration: 1, ease: 'power2.out' });
+    gsap.to('#agent-label', { opacity: 1, duration: 0.6, delay: 0.2 });
+    gsap.fromTo('#agent-selection-title', { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.4, ease: 'power2.out' });
+    gsap.to('#chat-bar-wrapper', { opacity: 1, duration: 0.6, delay: 1.2 });
+    gsap.to('#chat-pills-mobile', { opacity: 1, duration: 0.6, delay: 1.2 });
+    buildScatter();
+    const blocks = Array.from(document.querySelectorAll('#scatter-canvas .agent-text-block'));
+    animatePop(blocks);
+    setupFormTransitions();
+});
+</script>
+
+<script>
+/* ── Header & Footer animations — ported from 100K-Challenge ── */
+(function () {
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── 1. Header entrance — slide down from above ── */
+  gsap.set('.main-header', { y: -80, autoAlpha: 0 });
+  gsap.to('.main-header', { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', delay: 0.1 });
+
+  /* ── 2. Nav link hover — letter-spacing pulse ── */
+  document.querySelectorAll('.nav-center a').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      gsap.to(link, { letterSpacing: '0.03em', duration: 0.2, ease: 'power1.out' });
+    });
+    link.addEventListener('mouseleave', () => {
+      gsap.to(link, { letterSpacing: 'normal', duration: 0.3, ease: 'power1.out' });
+    });
+  });
+
+  /* ── 3. Header button magnetic hover ── */
+  document.querySelectorAll('.btn-reward, .btn-warrant').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const dx = (e.clientX - rect.left - rect.width  / 2) * 0.25;
+      const dy = (e.clientY - rect.top  - rect.height / 2) * 0.25;
+      gsap.to(btn, { x: dx, y: dy, duration: 0.3, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  /* ── 4. Footer scroll-reveal ── */
+  gsap.from('#site-footer', {
+    y: 80, opacity: 0, duration: 1.2, ease: 'power3.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 92%' }
+  });
+  gsap.from('.footer-brand-column', {
+    x: -40, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 88%' }
+  });
+  gsap.from('.footer-link-group', {
+    y: 30, opacity: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 85%' }
+  });
+  gsap.from('.footer-actions-column', {
+    x: 40, opacity: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 88%' }
+  });
+  gsap.from('.footer-bottom-bar', {
+    y: 20, opacity: 0, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '.footer-bottom-bar', start: 'top 98%' }
+  });
+
+  /* ── 5. Social icon bounce on hover ── */
+  document.querySelectorAll('.social-icon-btn').forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      gsap.to(icon, { scale: 1.3, rotation: 10, duration: 0.3, ease: 'back.out(2)' });
+    });
+    icon.addEventListener('mouseleave', () => {
+      gsap.to(icon, { scale: 1, rotation: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  /* ── 6. Input focus glow ── */
+  document.querySelectorAll('input[type="text"], input[type="email"]').forEach(input => {
+    input.addEventListener('focus', () => {
+      gsap.to(input, { boxShadow: '0 0 0 2px #a855f7, 0 4px 20px rgba(168,85,247,0.2)', duration: 0.3 });
+    });
+    input.addEventListener('blur', () => {
+      gsap.to(input, { boxShadow: 'none', duration: 0.3 });
+    });
+  });
+
+  ScrollTrigger.refresh();
+
+  /* ── sync --header-h to real header height ── */
+  function syncHeaderHeight() {
+    const h = document.querySelector('.main-header');
+    if (h) document.documentElement.style.setProperty('--header-h', h.offsetHeight + 'px');
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize', syncHeaderHeight);
+})();
+</script>
+</body>
+</html>
